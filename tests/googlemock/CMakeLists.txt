@@ -73,6 +73,6 @@ target_link_libraries(
     PUBLIC
     gmock gmock_main
     PRIVATE
-    ${KF5_PRIVATE_LIBRARIES}
-    ${QET_PRIVATE_LIBRARIES})
+    Qt${QT_VERSION_MAJOR}::Widgets
+    )
 

@@ -18,5 +18,53 @@
 # but they will not show up in IDEs unless they are listed in add_library.
 cmake_minimum_required(VERSION 3.14...3.19)
 
-add_subdirectory(gui)
-add_subdirectory(element)
+find_package(
+  QT
+  NAMES
+  Qt6
+  Qt5
+  COMPONENTS
+  Widgets
+  REQUIRED
+  )
+find_package(
+  Qt${QT_VERSION_MAJOR}
+  COMPONENTS
+  Widgets
+  REQUIRED
+  )
+
+set(HEADER_LIST
+  "${QElectroTech_Element_Updater_SOURCE_DIR}/include/mainwindow.h"
+  )
+
+# Make an automatic library - will be static or dynamic based on user setting
+add_library(gui
+  mainwindow.cpp
+  ${HEADER_LIST}
+  )
+
+# We need this directory, and users of our library will need it too
+target_include_directories(gui
+  PUBLIC
+  ../../include
+  )
+
+# This depends on (header only) boost
+target_link_libraries(gui
+  PRIVATE
+  Qt${QT_VERSION_MAJOR}::Widgets
+  )
+
+# All users of this library will need at least C++11
+target_compile_features(gui
+  PUBLIC
+  cxx_std_11
+  )
+
+# IDEs should put the headers in a nice place
+source_group(
+  TREE "${PROJECT_SOURCE_DIR}/include"
+  PREFIX "Header Files"
+  FILES ${HEADER_LIST}
+  )

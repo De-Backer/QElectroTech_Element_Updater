@@ -62,9 +62,11 @@ FetchContent_MakeAvailable(Catch2)
 
 enable_testing()
 
+add_definitions(-DTEST_CATCH_PATH="${PROJECT_SOURCE_DIR}")
+
 add_executable(
     ${PROJECT_NAME}
-    tst_My_test.cpp
+    loadelement_test.cpp
     main.cpp
     )
 
@@ -73,7 +75,9 @@ target_link_libraries(
     PUBLIC
     Catch2::Catch2
     PRIVATE
-    Qt${QT_VERSION_MAJOR}::Widgets)
+    Qt${QT_VERSION_MAJOR}::Widgets
+    element
+    )
 
 if (DEFINED ENV{CATCH_INCLUDE_DIR})
     set(CATCH_INCLUDE_DIR $ENV{CATCH_INCLUDE_DIR})

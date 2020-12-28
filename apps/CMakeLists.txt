@@ -42,4 +42,6 @@ target_compile_features(QElectroTech_Element_Updater PRIVATE cxx_std_17)
 target_link_libraries(QElectroTech_Element_Updater
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Widgets
-  gui)
+  gui
+  element
+  )

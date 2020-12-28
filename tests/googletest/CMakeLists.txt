@@ -72,6 +72,6 @@ target_link_libraries(
     PUBLIC
     gtest gtest_main
     PRIVATE
-    ${KF5_PRIVATE_LIBRARIES}
-    ${QET_PRIVATE_LIBRARIES})
+    Qt${QT_VERSION_MAJOR}::Widgets
+    )
 

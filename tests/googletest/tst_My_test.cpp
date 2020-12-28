@@ -1,4 +1,3 @@
-#include "../../sources/borderproperties.h"
 
 #include <gtest/gtest.h>
 
