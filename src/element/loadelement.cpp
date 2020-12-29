@@ -57,6 +57,13 @@ LoadElement::LoadElement(QString file)
 	}
 }
 
+LoadElement::~LoadElement()
+{
+	element->close();
+	element->deleteLater();
+	delete element;
+}
+
 /**
  * @brief LoadElement::definition
  * @param value
@@ -121,68 +128,30 @@ void LoadElement::LoadElement0_22(QXmlStreamReader* reader)
 void LoadElement::LoadElement0_3(QXmlStreamReader* reader)
 {
 	// definition
-	width	  = reader->attributes().value("width").toInt();
-	height	  = reader->attributes().value("height").toInt();
-	hotspot_x = reader->attributes().value("hotspot_x").toInt();
-	hotspot_y = reader->attributes().value("hotspot_y").toInt();
-	type	  = reader->attributes().value("type").toString();
-	link_type = reader->attributes().value("link_type").toString();
+	if (reader->name() == QLatin1String("definition")) read_definition(reader);
 
-	// uuid
-	reader->readNextStartElement();
-	if (reader->name() != "uuid")
+	while (reader->readNextStartElement())
 	{
-		qDebug() << "element has not uuid";
-		throw std::invalid_argument("element has not uuid");
-		return;
+		if (reader->name() == QLatin1String("uuid"))
+			read_definition_uuid(reader);
+		else
+			reader->skipCurrentElement();
 	}
-	uuid_element =
-		QUuid::fromString(reader->attributes().value("uuid").toString());
 
-	// name
-	bool alle_name_gevonden = false;
-	while (! alle_name_gevonden)
+	while (reader->readNextStartElement())
 	{
-		reader->readNextStartElement();
-		if (reader->name() == "names") { alle_name_gevonden = true; }
+		if (reader->name() == "names") { read_definition_name(reader); }
+		else if (reader->name() == QLatin1String("informations"))
+			read_definition_informations(reader);
+		else
+			reader->skipCurrentElement();
 	}
-	if (reader->name() != "names")
+
+	if (reader->hasError())
 	{
-		qDebug() << "element has not names";
 		throw std::invalid_argument(
-			"element has not names is "
-			+ reader->name().toString().toStdString());
-		return;
+			"XMLerror:" + reader->errorString().toStdString());
 	}
-	reader->readNextStartElement();
-	if (reader->name() != "name")
-	{
-		qDebug() << "element has not name";
-		throw std::invalid_argument("element has not name");
-		return;
-	}
-
-	bool alle_names_gevonden = false;
-	while (! alle_names_gevonden)
-	{
-		QString key, value;
-
-		key	  = reader->attributes().value("lang").toString();
-		value = reader->readElementText();
-		name_element.insert(key, value);
-
-		reader->readNextStartElement();
-		if (reader->name() != "name") { alle_names_gevonden = true; }
-	}
-
-	reader->readNextStartElement();
-	if (reader->name() != "informations")
-	{
-		qDebug() << "element has not informations";
-		throw std::invalid_argument("element has not informations");
-		return;
-	}
-	informations_element = reader->readElementText();
 }
 
 void LoadElement::LoadElement0_4(QXmlStreamReader* reader)
@@ -206,6 +175,62 @@ void LoadElement::LoadElement0_70(QXmlStreamReader* reader)
 }
 
 void LoadElement::LoadElement0_80(QXmlStreamReader* reader)
+{
+	reader->attributes();
+}
+
+void LoadElement::read_definition(QXmlStreamReader* reader)
+{
+	width	  = reader->attributes().value("width").toInt();
+	height	  = reader->attributes().value("height").toInt();
+	hotspot_x = reader->attributes().value("hotspot_x").toInt();
+	hotspot_y = reader->attributes().value("hotspot_y").toInt();
+	type	  = reader->attributes().value("type").toString();
+	link_type = reader->attributes().value("link_type").toString();
+}
+
+void LoadElement::read_definition_uuid(QXmlStreamReader* reader)
+{
+	Q_ASSERT(
+		reader->isStartElement() && reader->name() == QLatin1String("uuid"));
+	uuid_element =
+		QUuid::fromString(reader->attributes().value("uuid").toString());
+}
+
+void LoadElement::read_definition_name(QXmlStreamReader* reader)
+{
+	Q_ASSERT(
+		reader->isStartElement() && reader->name() == QLatin1String("names"));
+	reader->readNextStartElement();
+	Q_ASSERT(
+		reader->isStartElement() && reader->name() == QLatin1String("name"));
+
+	while (reader->name() == "name")
+	{
+		QString key, value;
+
+		key	  = reader->attributes().value("lang").toString();
+		value = reader->readElementText();
+		name_element.insert(key, value);
+
+		reader->readNextStartElement();
+	}
+}
+
+void LoadElement::read_definition_kindInformation(QXmlStreamReader* reader)
+{
+	reader->attributes();
+}
+
+void LoadElement::read_definition_informations(QXmlStreamReader* reader)
+{
+	Q_ASSERT(
+		reader->isStartElement()
+		&& reader->name() == QLatin1String("informations"));
+	informations_element = reader->readElementText();
+}
+
+void LoadElement::read_definition_description(QXmlStreamReader* reader)
 {
 	reader->attributes();
 }
