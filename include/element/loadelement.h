@@ -6,6 +6,7 @@
 #include <QString>
 #include <QUuid>
 #include <QVariant>
+#include <QVector>
 #include <QXmlStreamReader>
 
 class LoadElement
@@ -18,6 +19,7 @@ class LoadElement
 	QString	 name(QString language);
 	QVariant kindInformation(QString value);
 	QString	 informations();
+	QVector<QVector<QVariant>> description();
 
   private:
 	// definition
@@ -36,6 +38,7 @@ class LoadElement
 	QMap<QString, QString> kindInformation_text_element; // name, text
 	// informations_element
 	QString informations_element;
+	QVector<QVector<QVariant>> description_element;
 	QFile*	element;
 
 	void LoadElement0_22(QXmlStreamReader* reader);
@@ -52,6 +55,15 @@ class LoadElement
 	void read_definition_kindInformation(QXmlStreamReader* reader);
 	void read_definition_informations(QXmlStreamReader* reader);
 	void read_definition_description(QXmlStreamReader* reader);
+
+	void read_PartLine(QXmlStreamReader* reader);
+	void read_PartRectangle(QXmlStreamReader* reader);
+	void read_PartEllipse(QXmlStreamReader* reader);
+	void read_PartPolygon(QXmlStreamReader* reader);
+	void read_PartTerminal(QXmlStreamReader* reader);
+	void read_PartText(QXmlStreamReader* reader);
+	void read_PartArc(QXmlStreamReader* reader);
+	void read_PartDynamicTextField(QXmlStreamReader* reader);
 };
 
 #endif // LOADELEMENT_H

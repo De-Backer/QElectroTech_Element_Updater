@@ -98,6 +98,11 @@ QString LoadElement::name(QString language)
 
 QString LoadElement::informations() { return informations_element; }
 
+QVector<QVector<QVariant>> LoadElement::description()
+{
+	return description_element;
+}
+
 void LoadElement::LoadElement0_22(QXmlStreamReader* reader)
 {
 	// definition
@@ -143,6 +148,10 @@ void LoadElement::LoadElement0_3(QXmlStreamReader* reader)
 		if (reader->name() == "names") { read_definition_name(reader); }
 		else if (reader->name() == QLatin1String("informations"))
 			read_definition_informations(reader);
+		else if (reader->name() == QLatin1String("kindInformations"))
+			read_definition_kindInformation(reader);
+		else if (reader->name() == QLatin1String("description"))
+			read_definition_description(reader);
 		else
 			reader->skipCurrentElement();
 	}
@@ -232,5 +241,110 @@ void LoadElement::read_definition_informations(QXmlStreamReader* reader)
 
 void LoadElement::read_definition_description(QXmlStreamReader* reader)
 {
-	reader->attributes();
+	Q_ASSERT(
+		reader->isStartElement()
+		&& reader->name() == QLatin1String("description"));
+	while (reader->readNextStartElement())
+	{
+		if (reader->name() == "line") { read_PartLine(reader); }
+		else if (reader->name() == QLatin1String("rect"))
+			read_PartRectangle(reader);
+		else if (reader->name() == QLatin1String("ellipse"))
+			read_PartEllipse(reader);
+		else if (reader->name() == QLatin1String("circle"))
+			read_PartEllipse(reader);
+		else if (reader->name() == QLatin1String("polygon"))
+			read_PartPolygon(reader);
+		else if (reader->name() == QLatin1String("terminal"))
+			read_PartTerminal(reader);
+		else if (reader->name() == QLatin1String("text"))
+			read_PartText(reader);
+		else if (reader->name() == QLatin1String("arc"))
+			read_PartArc(reader);
+		else if (reader->name() == QLatin1String("dynamic_text"))
+			read_PartDynamicTextField(reader);
+		else if (reader->name() == QLatin1String("input"))
+			read_PartDynamicTextField(reader);
+		else
+			reader->skipCurrentElement();
+	}
+	if (reader->hasError())
+	{
+		throw std::invalid_argument(
+			"XMLerror:" + reader->errorString().toStdString());
+	}
+}
+
+void LoadElement::read_PartLine(QXmlStreamReader* reader)
+{
+	//	Q_ASSERT(
+	//		reader->isStartElement() && reader->name() ==
+	// QLatin1String("line"));
+	// 0 line
+	// 1 x1="-5"
+	// 2 y1="13"
+	// 3 x2="4"
+	// 4 y2="20"
+	// 5 length1="1.5"
+	// 6 length2="1.5"
+	// 7 end1="none"
+	// 8 end2="none"
+	// 9 style="line-style:normal;line-weight:thin;filling:none;color:black"
+	// 10 antialias="false"
+	QVector<QVariant> var(1, reader->name().toString());
+	var.append(reader->attributes().value("x1").toInt());
+	var.append(reader->attributes().value("y1").toInt());
+	var.append(reader->attributes().value("x2").toInt());
+	var.append(reader->attributes().value("y2").toInt());
+	var.append(reader->attributes().value("length1").toDouble());
+	var.append(reader->attributes().value("length2").toDouble());
+	var.append(reader->attributes().value("end1").toString());
+	var.append(reader->attributes().value("end2").toString());
+	var.append(reader->attributes().value("style").toString());
+	var.append(reader->attributes().value("antialias").toString());
+
+	description_element.append(var);
+	reader->readNextStartElement();
+}
+
+void LoadElement::read_PartRectangle(QXmlStreamReader* reader)
+{
+	reader->attributes().value("length1");
+	reader->readNextStartElement();
+}
+
+void LoadElement::read_PartEllipse(QXmlStreamReader* reader)
+{
+	reader->attributes().value("length1");
+	reader->readNextStartElement();
+}
+
+void LoadElement::read_PartPolygon(QXmlStreamReader* reader)
+{
+	reader->attributes().value("length1");
+	reader->readNextStartElement();
+}
+
+void LoadElement::read_PartTerminal(QXmlStreamReader* reader)
+{
+	reader->attributes().value("length1");
+	reader->readNextStartElement();
+}
+
+void LoadElement::read_PartText(QXmlStreamReader* reader)
+{
+	reader->attributes().value("length1");
+	reader->readNextStartElement();
+}
+
+void LoadElement::read_PartArc(QXmlStreamReader* reader)
+{
+	reader->attributes().value("length1");
+	reader->readNextStartElement();
+}
+
+void LoadElement::read_PartDynamicTextField(QXmlStreamReader* reader)
+{
+	reader->attributes().value("length1");
+	reader->readNextStartElement();
 }
