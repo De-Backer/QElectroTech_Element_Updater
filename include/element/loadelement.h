@@ -21,7 +21,7 @@ class LoadElement
 	QMap<QString, QString>			 name();
 	QMap<QString, QVector<QVariant>> kindInformation();
 	QString							 informations();
-	QVector<QVector<QVariant>>		 description();
+	QVector<QMap<QString, QVariant>> description();
 
   private:
 	// definition
@@ -40,7 +40,7 @@ class LoadElement
 		kindInformation_element; // name, show, text
 	// informations_element
 	QString informations_element;
-	QVector<QVector<QVariant>> description_element;
+	QVector<QMap<QString, QVariant>> description_element;
 	QFile*	element;
 
 	void LoadElement0_22(QXmlStreamReader* reader);

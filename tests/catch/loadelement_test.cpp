@@ -97,140 +97,153 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 
 		// description
 		// dit moeten we anders testen door is het een getal?, is er text, ..
-		QVector<QVector<QVariant>> test_description;
+		QVector<QMap<QString, QVariant>> test_description;
 		{
-			QVector<QVariant> test_var(1, "line");
-			test_var.append(-5);
-			test_var.append(13);
-			test_var.append(4);
-			test_var.append(20);
-			test_var.append(1.5);
-			test_var.append(1.5);
-			test_var.append("none");
-			test_var.append("none");
-			test_var.append(
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "line");
+			test_var.insert("x1", -5);
+			test_var.insert("y1", 13);
+			test_var.insert("x2", 4);
+			test_var.insert("y2", 20);
+			test_var.insert("length1", 1.5);
+			test_var.insert("length2", 1.5);
+			test_var.insert("end1", "none");
+			test_var.insert("end2", "none");
+			test_var.insert(
+				"style",
 				"line-style:normal;line-weight:thin;filling:none;color:black");
-			test_var.append("false");
+			test_var.insert("antialias", "false");
 			test_description.append(test_var);
 		}
 		{
-			QVector<QVariant> test_var(1, "line");
-			test_var.append(-1);
-			test_var.append(12);
-			test_var.append(-1);
-			test_var.append(19);
-			test_var.append(1.5);
-			test_var.append(1.5);
-			test_var.append("none");
-			test_var.append("none");
-			test_var.append(
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "line");
+			test_var.insert("x1", -1);
+			test_var.insert("y1", 12);
+			test_var.insert("x2", -1);
+			test_var.insert("y2", 19);
+			test_var.insert("length1", 1.5);
+			test_var.insert("length2", 1.5);
+			test_var.insert("end1", "none");
+			test_var.insert("end2", "none");
+			test_var.insert(
+				"style",
 				"line-style:normal;line-weight:normal;filling:none;color:"
 				"black");
-			test_var.append("false");
+			test_var.insert("antialias", "false");
 			test_description.append(test_var);
 		}
 		{
-			QVector<QVariant> test_var(1, "line");
-			test_var.append(0);
-			test_var.append(12);
-			test_var.append(0);
-			test_var.append(30);
-			test_var.append(1.5);
-			test_var.append(1.5);
-			test_var.append("none");
-			test_var.append("none");
-			test_var.append(
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "line");
+			test_var.insert("x1", 0);
+			test_var.insert("y1", 12);
+			test_var.insert("x2", 0);
+			test_var.insert("y2", 30);
+			test_var.insert("length1", 1.5);
+			test_var.insert("length2", 1.5);
+			test_var.insert("end1", "none");
+			test_var.insert("end2", "none");
+			test_var.insert(
+				"style",
 				"line-style:normal;line-weight:normal;filling:none;color:"
 				"black");
-			test_var.append("false");
+			test_var.insert("antialias", "false");
 			test_description.append(test_var);
 		}
 		{
-			QVector<QVariant> test_var(1, "line");
-			test_var.append(0);
-			test_var.append(9);
-			test_var.append(0);
-			test_var.append(0);
-			test_var.append(1.5);
-			test_var.append(1.5);
-			test_var.append("none");
-			test_var.append("none");
-			test_var.append(
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "line");
+			test_var.insert("x1", 0);
+			test_var.insert("y1", 9);
+			test_var.insert("x2", 0);
+			test_var.insert("y2", 0);
+			test_var.insert("length1", 1.5);
+			test_var.insert("length2", 1.5);
+			test_var.insert("end1", "none");
+			test_var.insert("end2", "none");
+			test_var.insert(
+				"style",
 				"line-style:normal;line-weight:normal;filling:none;color:"
 				"black");
-			test_var.append("false");
+			test_var.insert("antialias", "false");
 			test_description.append(test_var);
 		}
 		{
-			QVector<QVariant> test_var(1, "line");
-			test_var.append(1);
-			test_var.append(12);
-			test_var.append(1);
-			test_var.append(19);
-			test_var.append(1.5);
-			test_var.append(1.5);
-			test_var.append("none");
-			test_var.append("none");
-			test_var.append(
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "line");
+			test_var.insert("x1", 1);
+			test_var.insert("y1", 12);
+			test_var.insert("x2", 1);
+			test_var.insert("y2", 19);
+			test_var.insert("length1", 1.5);
+			test_var.insert("length2", 1.5);
+			test_var.insert("end1", "none");
+			test_var.insert("end2", "none");
+			test_var.insert(
+				"style",
 				"line-style:normal;line-weight:normal;filling:none;color:"
 				"black");
-			test_var.append("false");
+			test_var.insert("antialias", "false");
 			test_description.append(test_var);
 		}
-		int				  var = 0;
-		QVector<QVariant> description;
-		CHECK(mytest.description().size() > 0);
-		if (mytest.description().size() == 0) return;
-		description.append(mytest.description().at(0));
-		for (QVector<QVariant> description : mytest.description())
-		{
-			int var2 = 0;
+		int var = 0;
+		for (QMap<QString, QVariant> vars : mytest.description())
+		{ CHECK(test_description.at(var++) == vars); }
+		//		int				  var = 0;
+		//		QVector<QVariant> description;
+		//		CHECK(mytest.description().size() > 0);
+		//		if (mytest.description().size() == 0) return;
+		//		description.append(mytest.description().at(0));
+		//		for (QMap<QString, QVariant> description : mytest.description())
+		//		{
+		//			int var2 = 0;
 
-			CHECK(
-				test_description.at(var).at(var2).toString().toStdString()
-				== description.at(var2).toString().toStdString());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toInt()
-				== description.at(var2).toInt());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toInt()
-				== description.at(var2).toInt());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toInt()
-				== description.at(var2).toInt());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toInt()
-				== description.at(var2).toInt());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toDouble()
-				== description.at(var2).toDouble());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toDouble()
-				== description.at(var2).toDouble());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toString().toStdString()
-				== description.at(var2).toString().toStdString());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toString().toStdString()
-				== description.at(var2).toString().toStdString());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toString().toStdString()
-				== description.at(var2).toString().toStdString());
-			++var2;
-			CHECK(
-				test_description.at(var).at(var2).toString().toStdString()
-				== description.at(var2).toString().toStdString());
-			++var;
-		}
+		//			CHECK(
+		//				test_description.at(var).at(var2).toString().toStdString()
+		//				== description.at(var2).toString().toStdString());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toInt()
+		//				== description.at(var2).toInt());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toInt()
+		//				== description.at(var2).toInt());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toInt()
+		//				== description.at(var2).toInt());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toInt()
+		//				== description.at(var2).toInt());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toDouble()
+		//				== description.at(var2).toDouble());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toDouble()
+		//				== description.at(var2).toDouble());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toString().toStdString()
+		//				== description.at(var2).toString().toStdString());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toString().toStdString()
+		//				== description.at(var2).toString().toStdString());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toString().toStdString()
+		//				== description.at(var2).toString().toStdString());
+		//			++var2;
+		//			CHECK(
+		//				test_description.at(var).at(var2).toString().toStdString()
+		//				== description.at(var2).toString().toStdString());
+		//			++var;
+		//		}
 	}
 	catch (std::exception& e)
 	{

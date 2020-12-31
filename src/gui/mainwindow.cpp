@@ -126,7 +126,7 @@ void MainWindow::open_file()
 			qDebug() << "uuid:            " << test.uuid();
 			qDebug() << "informations:    " << test.informations();
 			qDebug() << "description:     ";
-			for (QVector<QVariant> description : test.description())
+			for (QMap<QString, QVariant> description : test.description())
 			{ qDebug() << description; }
 			qDebug() << "kindInformation: " << test.kindInformation();
 			qDebug() << "definition:      " << test.definition();
