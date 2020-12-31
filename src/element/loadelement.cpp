@@ -111,6 +111,8 @@ QString LoadElement::name(QString language)
 	return name_element.value(language, defkey);
 }
 
+QMap<QString, QString> LoadElement::name() { return name_element; }
+
 QMap<QString, QVector<QVariant>> LoadElement::kindInformation()
 {
 	return kindInformation_element;
@@ -185,27 +187,27 @@ void LoadElement::LoadElement0_3(QXmlStreamReader* reader)
 
 void LoadElement::LoadElement0_4(QXmlStreamReader* reader)
 {
-	reader->attributes();
+	LoadElement0_3(reader);
 }
 
 void LoadElement::LoadElement0_5(QXmlStreamReader* reader)
 {
-	reader->attributes();
+	LoadElement0_3(reader);
 }
 
 void LoadElement::LoadElement0_60(QXmlStreamReader* reader)
 {
-	reader->attributes();
+	LoadElement0_3(reader);
 }
 
 void LoadElement::LoadElement0_70(QXmlStreamReader* reader)
 {
-	reader->attributes();
+	LoadElement0_3(reader);
 }
 
 void LoadElement::LoadElement0_80(QXmlStreamReader* reader)
 {
-	reader->attributes();
+	LoadElement0_3(reader);
 }
 
 void LoadElement::read_definition(QXmlStreamReader* reader)

@@ -18,6 +18,7 @@ class LoadElement
 	QVector<QVariant>				 definition();
 	QUuid							 uuid();
 	QString							 name(QString language);
+	QMap<QString, QString>			 name();
 	QMap<QString, QVector<QVariant>> kindInformation();
 	QString							 informations();
 	QVector<QVector<QVariant>>		 description();

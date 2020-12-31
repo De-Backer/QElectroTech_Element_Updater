@@ -27,6 +27,15 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		REQUIRE_THROWS_WITH(mytest.definition("name"), "unknown value");
 		REQUIRE_THROWS_WITH(mytest.definition("description"), "unknown value");
 
+		QVector<QVariant> test_definition;
+		test_definition.append(10);
+		test_definition.append(30);
+		test_definition.append(5);
+		test_definition.append(0);
+		test_definition.append("element");
+		test_definition.append("");
+		CHECK(test_definition == mytest.definition());
+
 		// uuid
 		CHECK(
 			QUuid("0EE598EC-C72A-43A3-B330-741E2D41940A")
@@ -65,6 +74,23 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		CHECK(
 			"Plug and multipolar representation\nunifilar"
 			== mytest.name("ww").toStdString());
+		QMap<QString, QString> test_name;
+		test_name.insert("ar", "قابس و مقبس متعدد الأقطاب, تمثيل أحادي الخط");
+		test_name.insert("de", "Steckverbindung komplett mit 6 Kontakten");
+		test_name.insert("en", "Plug and multipolar representation\nunifilar");
+		test_name.insert(
+			"it",
+			"Spina e presa multipolari, rappresentazione unifilare");
+		test_name.insert(
+			"fr",
+			"Prise et fiche multipolaires, représentation\nunifilaire\n");
+		test_name.insert("pl", "Złącze wielostykowe");
+		test_name.insert("es", "Conector multipolar, representación unifilar");
+		test_name.insert(
+			"cs",
+			"Zásuvka a zástrčka vícepólová, v jednopólovém znázornění");
+		test_name.insert("nl", "Steker en Contact veelpolig enkellijns");
+		CHECK(test_name.toStdMap() == mytest.name().toStdMap());
 
 		// informations
 		CHECK("EN 60617: 03-03-08" == mytest.informations().toStdString());

@@ -109,6 +109,7 @@ QString MainWindow::RemoveAmpersand(QString var)
 
 void MainWindow::open_file()
 {
+	// #TODO Dir /home/simon/GIT/qet/elements/ veranderen
 	QStringList data = QFileDialog::getOpenFileNames(
 		this,
 		tr("Open Element"),
@@ -121,21 +122,21 @@ void MainWindow::open_file()
 		{
 			LoadElement test(var);
 			qDebug() << var;
-			qDebug() << "name:            " << test.name("en");
+			qDebug() << "name:            " << test.name();
 			qDebug() << "uuid:            " << test.uuid();
 			qDebug() << "informations:    " << test.informations();
-			qDebug() << "description:     " << test.description();
+			qDebug() << "description:     ";
+			for (QVector<QVariant> description : test.description())
+			{ qDebug() << description; }
 			qDebug() << "kindInformation: " << test.kindInformation();
 			qDebug() << "definition:      " << test.definition();
 			qDebug() << "or definition:";
 			qDebug() << "width:           " << test.definition("width");
 			qDebug() << "height:          " << test.definition("height");
-			//!!!!!!== exception test
-			qDebug() << "hotspot_x:       " << test.definition("hotspot_X");
+			qDebug() << "hotspot_x:       " << test.definition("hotspot_x");
 			qDebug() << "hotspot_y:       " << test.definition("hotspot_y");
 			qDebug() << "type:            " << test.definition("type");
 			qDebug() << "link_type:       " << test.definition("link_type");
-			qDebug() << "version:         " << test.definition("version");
 		}
 		catch (std::exception& e)
 		{
