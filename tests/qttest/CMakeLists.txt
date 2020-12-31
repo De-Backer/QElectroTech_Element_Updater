@@ -51,7 +51,8 @@ find_package(
  COMPONENTS
  Widgets
  Test
- REQUIRED)
+ REQUIRED
+ )
 
 enable_testing()
 
@@ -61,6 +62,6 @@ add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
 target_link_libraries(
   ${PROJECT_NAME}
   PRIVATE
-  Qt::Test
+  Qt${QT_VERSION_MAJOR}::Test
   Qt${QT_VERSION_MAJOR}::Widgets)
 

@@ -70,6 +70,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		CHECK("EN 60617: 03-03-08" == mytest.informations().toStdString());
 
 		// description
+		// dit moeten we anders testen door is het een getal?, is er text, ..
 		QVector<QVector<QVariant>> test_description;
 		{
 			QVector<QVariant> test_var(1, "line");

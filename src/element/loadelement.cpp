@@ -8,6 +8,7 @@
 
 LoadElement::LoadElement(QString file)
 {
+	qDebug() << this << file;
 	element = new QFile(file);
 	if (! element->open(QIODevice::ReadOnly | QIODevice::Text))
 	{
@@ -78,9 +79,23 @@ QVariant LoadElement::definition(QString value)
 	if (value == "type") return type;
 	if (value == "link_type") return link_type;
 
+	qDebug() << "_____________________________________________________________";
+	qWarning() << "!! exception !!" << __LINE__ << __FILE__;
 	qDebug() << "value: " << value;
 	throw std::invalid_argument("unknown value");
 	return 0;
+}
+
+QVector<QVariant> LoadElement::definition()
+{
+	QVector<QVariant> var;
+	var.append(width);
+	var.append(height);
+	var.append(hotspot_x);
+	var.append(hotspot_y);
+	var.append(type);
+	var.append(link_type);
+	return var;
 }
 
 QUuid LoadElement::uuid() { return uuid_element; }
@@ -94,6 +109,11 @@ QString LoadElement::name(QString language)
 {
 	QString defkey = name_element.value("en", "error");
 	return name_element.value(language, defkey);
+}
+
+QMap<QString, QVector<QVariant>> LoadElement::kindInformation()
+{
+	return kindInformation_element;
 }
 
 QString LoadElement::informations() { return informations_element; }

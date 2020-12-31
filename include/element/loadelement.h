@@ -14,12 +14,13 @@ class LoadElement
   public:
 	LoadElement(QString file);
 	~LoadElement();
-	QVariant definition(QString value);
-	QUuid	 uuid();
-	QString	 name(QString language);
-	QVariant kindInformation(QString value);
-	QString	 informations();
-	QVector<QVector<QVariant>> description();
+	QVariant						 definition(QString value);
+	QVector<QVariant>				 definition();
+	QUuid							 uuid();
+	QString							 name(QString language);
+	QMap<QString, QVector<QVariant>> kindInformation();
+	QString							 informations();
+	QVector<QVector<QVariant>>		 description();
 
   private:
 	// definition
@@ -34,8 +35,8 @@ class LoadElement
 	// name
 	QMap<QString, QString> name_element;
 	// kindInformation
-	QMap<QString, int>	   kindInformation_show_element; // name, show
-	QMap<QString, QString> kindInformation_text_element; // name, text
+	QMap<QString, QVector<QVariant>>
+		kindInformation_element; // name, show, text
 	// informations_element
 	QString informations_element;
 	QVector<QVector<QVariant>> description_element;
