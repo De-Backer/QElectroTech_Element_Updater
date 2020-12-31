@@ -72,13 +72,8 @@ LoadElement::~LoadElement()
  */
 QVariant LoadElement::definition(QString value)
 {
-	if (value == "width") return width;
-	if (value == "height") return height;
-	if (value == "hotspot_x") return hotspot_x;
-	if (value == "hotspot_y") return hotspot_y;
-	if (value == "type") return type;
-	if (value == "link_type") return link_type;
-
+	QVariant data = definition_element.value(value, "error");
+	if (data != "error") return data;
 	qDebug() << "_____________________________________________________________";
 	qWarning() << "!! exception !!" << __LINE__ << __FILE__;
 	qDebug() << "value: " << value;
@@ -86,17 +81,7 @@ QVariant LoadElement::definition(QString value)
 	return 0;
 }
 
-QMap<QString, QVariant> LoadElement::definition()
-{
-	QMap<QString, QVariant> var;
-	var.insert("width", width);
-	var.insert("height", height);
-	var.insert("hotspot_x", hotspot_x);
-	var.insert("hotspot_y", hotspot_y);
-	var.insert("type", type);
-	var.insert("link_type", link_type);
-	return var;
-}
+QMap<QString, QVariant> LoadElement::definition() { return definition_element; }
 
 QUuid LoadElement::uuid() { return uuid_element; }
 
@@ -128,12 +113,24 @@ QVector<QMap<QString, QVariant>> LoadElement::description()
 void LoadElement::LoadElement0_22(QXmlStreamReader* reader)
 {
 	// definition
-	width	  = reader->attributes().value("width").toInt();
-	height	  = reader->attributes().value("height").toInt();
-	hotspot_x = reader->attributes().value("hotspot_x").toInt();
-	hotspot_y = reader->attributes().value("hotspot_y").toInt();
-	type	  = reader->attributes().value("type").toString();
-	link_type = ""; //?
+	definition_element.insert(
+		"width",
+		reader->attributes().value("width").toInt());
+	definition_element.insert(
+		"height",
+		reader->attributes().value("height").toInt());
+	definition_element.insert(
+		"hotspot_x",
+		reader->attributes().value("hotspot_x").toInt());
+	definition_element.insert(
+		"hotspot_y",
+		reader->attributes().value("hotspot_y").toInt());
+	definition_element.insert(
+		"type",
+		reader->attributes().value("type").toString());
+	definition_element.insert(
+		"link_type",
+		reader->attributes().value("link_type").toString());
 
 	// uuid
 	reader->readNextStartElement();
@@ -212,12 +209,24 @@ void LoadElement::LoadElement0_80(QXmlStreamReader* reader)
 
 void LoadElement::read_definition(QXmlStreamReader* reader)
 {
-	width	  = reader->attributes().value("width").toInt();
-	height	  = reader->attributes().value("height").toInt();
-	hotspot_x = reader->attributes().value("hotspot_x").toInt();
-	hotspot_y = reader->attributes().value("hotspot_y").toInt();
-	type	  = reader->attributes().value("type").toString();
-	link_type = reader->attributes().value("link_type").toString();
+	definition_element.insert(
+		"width",
+		reader->attributes().value("width").toInt());
+	definition_element.insert(
+		"height",
+		reader->attributes().value("height").toInt());
+	definition_element.insert(
+		"hotspot_x",
+		reader->attributes().value("hotspot_x").toInt());
+	definition_element.insert(
+		"hotspot_y",
+		reader->attributes().value("hotspot_y").toInt());
+	definition_element.insert(
+		"type",
+		reader->attributes().value("type").toString());
+	definition_element.insert(
+		"link_type",
+		reader->attributes().value("link_type").toString());
 }
 
 void LoadElement::read_definition_uuid(QXmlStreamReader* reader)
@@ -274,7 +283,7 @@ void LoadElement::read_definition_description(QXmlStreamReader* reader)
 		else if (reader->name() == QLatin1String("ellipse"))
 			read_PartEllipse(reader);
 		else if (reader->name() == QLatin1String("circle"))
-			read_PartEllipse(reader);
+			read_PartCircle(reader);
 		else if (reader->name() == QLatin1String("polygon"))
 			read_PartPolygon(reader);
 		else if (reader->name() == QLatin1String("terminal"))
@@ -336,14 +345,36 @@ void LoadElement::read_PartRectangle(QXmlStreamReader* reader)
 
 void LoadElement::read_PartEllipse(QXmlStreamReader* reader)
 {
+	// diameter
 	Q_ASSERT(
-		reader->isStartElement()
-		&& (reader->name() == QLatin1String("ellipse")
-			|| reader->name() == QLatin1String("circle")));
-	reader->attributes().value("length1");
+		reader->isStartElement() && reader->name() == QLatin1String("ellipse"));
+	QMap<QString, QVariant> var;
+	var.insert("name", reader->name().toString());
+	var.insert("x", reader->attributes().value("x").toInt());
+	var.insert("y", reader->attributes().value("y").toInt());
+	var.insert("height", reader->attributes().value("height").toDouble());
+	var.insert("width", reader->attributes().value("width").toDouble());
+	var.insert("style", reader->attributes().value("style").toString());
+	var.insert("antialias", reader->attributes().value("antialias").toString());
+	description_element.append(var);
 	reader->readNextStartElement();
 }
 
+void LoadElement::read_PartCircle(QXmlStreamReader* reader)
+{
+	// diameter
+	Q_ASSERT(
+		reader->isStartElement() && reader->name() == QLatin1String("circle"));
+	QMap<QString, QVariant> var;
+	var.insert("name", reader->name().toString());
+	var.insert("x", reader->attributes().value("x").toInt());
+	var.insert("y", reader->attributes().value("y").toInt());
+	var.insert("diameter", reader->attributes().value("diameter").toInt());
+	var.insert("style", reader->attributes().value("style").toString());
+	var.insert("antialias", reader->attributes().value("antialias").toString());
+	description_element.append(var);
+	reader->readNextStartElement();
+}
 void LoadElement::read_PartPolygon(QXmlStreamReader* reader)
 {
 	Q_ASSERT(

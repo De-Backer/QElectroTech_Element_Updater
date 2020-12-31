@@ -28,12 +28,7 @@ class LoadElement
 
   private:
 	// definition
-	int		width	  = 0;
-	int		height	  = 0;
-	int		hotspot_x = 0;
-	int		hotspot_y = 0;
-	QString type;
-	QString link_type;
+	QMap<QString, QVariant> definition_element;
 	// uuid
 	QUuid uuid_element = QUuid::createUuid();
 	// name
@@ -64,6 +59,7 @@ class LoadElement
 	void read_PartLine(QXmlStreamReader* reader);
 	void read_PartRectangle(QXmlStreamReader* reader);
 	void read_PartEllipse(QXmlStreamReader* reader);
+	void read_PartCircle(QXmlStreamReader* reader);
 	void read_PartPolygon(QXmlStreamReader* reader);
 	void read_PartTerminal(QXmlStreamReader* reader);
 	void read_PartText(QXmlStreamReader* reader);

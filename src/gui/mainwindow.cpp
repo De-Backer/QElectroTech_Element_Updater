@@ -130,13 +130,6 @@ void MainWindow::open_file()
 			{ qDebug() << description; }
 			qDebug() << "kindInformation: " << test.kindInformation();
 			qDebug() << "definition:      " << test.definition();
-			qDebug() << "or definition:";
-			qDebug() << "width:           " << test.definition("width");
-			qDebug() << "height:          " << test.definition("height");
-			qDebug() << "hotspot_x:       " << test.definition("hotspot_x");
-			qDebug() << "hotspot_y:       " << test.definition("hotspot_y");
-			qDebug() << "type:            " << test.definition("type");
-			qDebug() << "link_type:       " << test.definition("link_type");
 		}
 		catch (std::exception& e)
 		{
