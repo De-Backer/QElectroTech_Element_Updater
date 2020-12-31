@@ -14,10 +14,13 @@ class LoadElement
   public:
 	LoadElement(QString file);
 	~LoadElement();
-	QVariant						 definition(QString value);
-	QVector<QVariant>				 definition();
-	QUuid							 uuid();
-	QString							 name(QString language);
+	[[deprecated(
+		"Replaced by definition(), which has an QMap interface")]] QVariant
+							definition(QString value);
+	QMap<QString, QVariant> definition();
+	QUuid					uuid();
+	[[deprecated("Replaced by name(), which has an QMap interface")]] QString
+									 name(QString language);
 	QMap<QString, QString>			 name();
 	QMap<QString, QVector<QVariant>> kindInformation();
 	QString							 informations();

@@ -86,15 +86,15 @@ QVariant LoadElement::definition(QString value)
 	return 0;
 }
 
-QVector<QVariant> LoadElement::definition()
+QMap<QString, QVariant> LoadElement::definition()
 {
-	QVector<QVariant> var;
-	var.append(width);
-	var.append(height);
-	var.append(hotspot_x);
-	var.append(hotspot_y);
-	var.append(type);
-	var.append(link_type);
+	QMap<QString, QVariant> var;
+	var.insert("width", width);
+	var.insert("height", height);
+	var.insert("hotspot_x", hotspot_x);
+	var.insert("hotspot_y", hotspot_y);
+	var.insert("type", type);
+	var.insert("link_type", link_type);
 	return var;
 }
 

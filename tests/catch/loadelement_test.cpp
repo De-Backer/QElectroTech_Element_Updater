@@ -27,13 +27,13 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		REQUIRE_THROWS_WITH(mytest.definition("name"), "unknown value");
 		REQUIRE_THROWS_WITH(mytest.definition("description"), "unknown value");
 
-		QVector<QVariant> test_definition;
-		test_definition.append(10);
-		test_definition.append(30);
-		test_definition.append(5);
-		test_definition.append(0);
-		test_definition.append("element");
-		test_definition.append("");
+		QMap<QString, QVariant> test_definition;
+		test_definition.insert("width", 10);
+		test_definition.insert("height", 30);
+		test_definition.insert("hotspot_x", 5);
+		test_definition.insert("hotspot_y", 0);
+		test_definition.insert("type", "element");
+		test_definition.insert("link_type", "");
 		CHECK(test_definition == mytest.definition());
 
 		// uuid
@@ -190,60 +190,6 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		int var = 0;
 		for (QMap<QString, QVariant> vars : mytest.description())
 		{ CHECK(test_description.at(var++) == vars); }
-		//		int				  var = 0;
-		//		QVector<QVariant> description;
-		//		CHECK(mytest.description().size() > 0);
-		//		if (mytest.description().size() == 0) return;
-		//		description.append(mytest.description().at(0));
-		//		for (QMap<QString, QVariant> description : mytest.description())
-		//		{
-		//			int var2 = 0;
-
-		//			CHECK(
-		//				test_description.at(var).at(var2).toString().toStdString()
-		//				== description.at(var2).toString().toStdString());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toInt()
-		//				== description.at(var2).toInt());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toInt()
-		//				== description.at(var2).toInt());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toInt()
-		//				== description.at(var2).toInt());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toInt()
-		//				== description.at(var2).toInt());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toDouble()
-		//				== description.at(var2).toDouble());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toDouble()
-		//				== description.at(var2).toDouble());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toString().toStdString()
-		//				== description.at(var2).toString().toStdString());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toString().toStdString()
-		//				== description.at(var2).toString().toStdString());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toString().toStdString()
-		//				== description.at(var2).toString().toStdString());
-		//			++var2;
-		//			CHECK(
-		//				test_description.at(var).at(var2).toString().toStdString()
-		//				== description.at(var2).toString().toStdString());
-		//			++var;
-		//		}
 	}
 	catch (std::exception& e)
 	{
