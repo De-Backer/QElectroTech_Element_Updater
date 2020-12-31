@@ -375,11 +375,29 @@ void LoadElement::read_PartCircle(QXmlStreamReader* reader)
 	description_element.append(var);
 	reader->readNextStartElement();
 }
+
 void LoadElement::read_PartPolygon(QXmlStreamReader* reader)
 {
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("polygon"));
-	reader->attributes().value("length1");
+	QMap<QString, QVariant> var;
+	var.insert("name", reader->name().toString());
+	var.insert("style", reader->attributes().value("style").toString());
+	var.insert("antialias", reader->attributes().value("antialias").toString());
+	var.insert("closed", reader->attributes().value("closed").toString());
+	int nr = 1;
+	while (reader->attributes().hasAttribute(QString("x%1").arg(nr)))
+	{
+		var.insert(
+			QString("x%1").arg(nr),
+			reader->attributes().value(QString("x%1").arg(nr)).toInt());
+		var.insert(
+			QString("y%1").arg(nr),
+			reader->attributes().value(QString("y%1").arg(nr)).toInt());
+		++nr;
+	}
+	description_element.append(var);
+
 	reader->readNextStartElement();
 }
 
@@ -404,7 +422,17 @@ void LoadElement::read_PartArc(QXmlStreamReader* reader)
 {
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("arc"));
-	reader->attributes().value("length1");
+	QMap<QString, QVariant> var;
+	var.insert("name", reader->name().toString());
+	var.insert("x", reader->attributes().value("x").toInt());
+	var.insert("y", reader->attributes().value("y").toInt());
+	var.insert("height", reader->attributes().value("height").toDouble());
+	var.insert("width", reader->attributes().value("width").toDouble());
+	var.insert("start", reader->attributes().value("start").toInt());
+	var.insert("angle", reader->attributes().value("angle").toInt());
+	var.insert("style", reader->attributes().value("style").toString());
+	var.insert("antialias", reader->attributes().value("antialias").toString());
+	description_element.append(var);
 	reader->readNextStartElement();
 }
 
