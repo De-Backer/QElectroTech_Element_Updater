@@ -136,6 +136,28 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "input");
+			test_var.insert("rotate", "true");
+			test_var.insert("size", 5);
+			test_var.insert("text", "6");
+			test_var.insert("x", 1);
+			test_var.insert("y", 20.5);
+			test_var.insert("tagg", "");
+			test_description.append(test_var);
+		}
+		{
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "input");
+			test_var.insert("rotate", "true");
+			test_var.insert("size", 8);
+			test_var.insert("text", "_");
+			test_var.insert("x", 7);
+			test_var.insert("y", 14.5);
+			test_var.insert("tagg", "label");
+			test_description.append(test_var);
+		}
+		{
+			QMap<QString, QVariant> test_var;
 			test_var.insert("name", "line");
 			test_var.insert("x1", 0);
 			test_var.insert("y1", 12);
@@ -188,9 +210,51 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 			test_var.insert("antialias", "false");
 			test_description.append(test_var);
 		}
+		{
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "arc");
+			test_var.insert("angle", -180);
+			test_var.insert("antialias", "true");
+			test_var.insert("height", 6);
+			test_var.insert("start", -180);
+			test_var.insert("width", 6);
+			test_var.insert("x", -3);
+			test_var.insert("y", 10);
+			test_var.insert(
+				"style",
+				"line-style:normal;line-weight:normal;filling:none;color:"
+				"black");
+			test_description.append(test_var);
+		}
+		{
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "terminal");
+			test_var.insert("nameHidden", "");
+			test_var.insert("number", 0);
+			test_var.insert("orientation", "n");
+			test_var.insert("terminalname", "");
+			test_var.insert("x", 0);
+			test_var.insert("y", 0);
+			test_description.append(test_var);
+		}
+		{
+			QMap<QString, QVariant> test_var;
+			test_var.insert("name", "terminal");
+			test_var.insert("nameHidden", "");
+			test_var.insert("number", 0);
+			test_var.insert("orientation", "s");
+			test_var.insert("terminalname", "");
+			test_var.insert("x", 0);
+			test_var.insert("y", 30);
+			test_description.append(test_var);
+		}
 		int var = 0;
+		INFO("Test case start");
 		for (QMap<QString, QVariant> vars : mytest.description())
-		{ CHECK(test_description.at(var++) == vars); }
+		{
+			INFO("vars");
+			CHECK(test_description.at(var++).toStdMap() == vars.toStdMap());
+		}
 	}
 	catch (std::exception& e)
 	{

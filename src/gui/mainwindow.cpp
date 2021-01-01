@@ -167,19 +167,19 @@ void MainWindow::open_dir()
 		try
 		{
 			LoadElement test(filename);
-			//			qDebug() << filename;
-			//			qDebug() << "name:            " << test.name();
-			//			qDebug() << "uuid:            " << test.uuid();
-			//			qDebug() << "informations:    " << test.informations();
-			//			qDebug() << "description:     ";
-			//			for (QMap<QString, QVariant> description :
-			// test.description()) 			{ qDebug() << description; }
-			// qDebug()
-			// << "kindInformation: " << test.kindInformation();
-			//			qDebug() << "version:        "
-			//					 << test.definition()
-			//							.value("version", "! no version
-			// gevonden") 							.toString();
+			qDebug() << filename;
+			qDebug() << "name:            " << test.name();
+			qDebug() << "uuid:            " << test.uuid();
+			qDebug() << "informations:    " << test.informations();
+			qDebug() << "description:     ";
+			for (QMap<QString, QVariant> description : test.description())
+			{ qDebug() << description; }
+			qDebug() << "kindInformation: " << test.kindInformation();
+			qDebug() << "definition     : " << test.definition();
+			qDebug() << "version:        "
+					 << test.definition()
+							.value("version", "! no version gevonden")
+							.toString();
 			version_elements << test.definition()
 									.value("version", "! no version gevonden")
 									.toString();
