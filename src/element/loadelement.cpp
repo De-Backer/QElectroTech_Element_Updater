@@ -295,7 +295,7 @@ void LoadElement::read_definition_description(QXmlStreamReader* reader)
 		else if (reader->name() == QLatin1String("dynamic_text"))
 			read_PartDynamicTextField(reader);
 		else if (reader->name() == QLatin1String("input"))
-			read_PartDynamicTextField(reader);
+			read_PartInput(reader);
 		else
 			reader->skipCurrentElement();
 	}
@@ -406,7 +406,20 @@ void LoadElement::read_PartTerminal(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement()
 		&& reader->name() == QLatin1String("terminal"));
-	reader->attributes().value("length1");
+	QMap<QString, QVariant> var;
+	var.insert("name", reader->name().toString());
+	var.insert("x", reader->attributes().value("x").toInt());
+	var.insert("y", reader->attributes().value("y").toInt());
+	var.insert(
+		"orientation",
+		reader->attributes().value("orientation").toString());
+	var.insert("number", reader->attributes().value("number").toInt());
+	var.insert("terminalname", reader->attributes().value("name").toString());
+	var.insert(
+		"nameHidden",
+		reader->attributes().value("nameHidden").toString());
+	description_element.append(var);
+
 	reader->readNextStartElement();
 }
 
@@ -414,7 +427,16 @@ void LoadElement::read_PartText(QXmlStreamReader* reader)
 {
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("text"));
-	reader->attributes().value("length1");
+	QMap<QString, QVariant> var;
+	var.insert("name", reader->name().toString());
+	var.insert("x", reader->attributes().value("x").toInt());
+	var.insert("y", reader->attributes().value("y").toInt());
+	var.insert("rotation", reader->attributes().value("rotation").toInt());
+	var.insert("font", reader->attributes().value("font").toString());
+	var.insert("text", reader->attributes().value("text").toString());
+	var.insert("color", reader->attributes().value("color").toString());
+	description_element.append(var);
+
 	reader->readNextStartElement();
 }
 
@@ -440,8 +462,41 @@ void LoadElement::read_PartDynamicTextField(QXmlStreamReader* reader)
 {
 	Q_ASSERT(
 		reader->isStartElement()
-		&& (reader->name() == QLatin1String("dynamic_text")
-			|| reader->name() == QLatin1String("input")));
-	reader->attributes().value("length1");
+		&& reader->name() == QLatin1String("dynamic_text"));
+	QMap<QString, QVariant> var;
+	var.insert("name", reader->name().toString());
+	var.insert("x", reader->attributes().value("x").toInt());
+	var.insert("y", reader->attributes().value("y").toInt());
+	var.insert("z", reader->attributes().value("z").toInt());
+	var.insert("rotation", reader->attributes().value("rotation").toInt());
+	var.insert("text_width", reader->attributes().value("text_width").toInt());
+	var.insert("text_from", reader->attributes().value("text_from").toString());
+	var.insert(
+		"Valignment",
+		reader->attributes().value("Valignment").toString());
+	var.insert(
+		"Halignment",
+		reader->attributes().value("Halignment").toString());
+	var.insert("font", reader->attributes().value("font").toString());
+	var.insert("frame", reader->attributes().value("frame").toString());
+	var.insert(
+		"uuid",
+		QUuid::fromString(reader->attributes().value("uuid").toString()));
+	description_element.append(var);
+	reader->readNextStartElement();
+}
+
+void LoadElement::read_PartInput(QXmlStreamReader* reader)
+{
+	Q_ASSERT(
+		reader->isStartElement() && reader->name() == QLatin1String("input"));
+	QMap<QString, QVariant> var;
+	var.insert("name", reader->name().toString());
+	var.insert("x", reader->attributes().value("x").toInt());
+	var.insert("y", reader->attributes().value("y").toInt());
+	var.insert("size", reader->attributes().value("size").toInt());
+	var.insert("rotation", reader->attributes().value("rotation").toString());
+	var.insert("text", reader->attributes().value("text").toString());
+	description_element.append(var);
 	reader->readNextStartElement();
 }

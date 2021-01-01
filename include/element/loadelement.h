@@ -65,6 +65,7 @@ class LoadElement
 	void read_PartText(QXmlStreamReader* reader);
 	void read_PartArc(QXmlStreamReader* reader);
 	void read_PartDynamicTextField(QXmlStreamReader* reader);
+	void read_PartInput(QXmlStreamReader* reader);
 };
 
 #endif // LOADELEMENT_H
