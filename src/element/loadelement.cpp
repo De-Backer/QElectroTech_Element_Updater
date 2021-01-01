@@ -22,39 +22,32 @@ LoadElement::LoadElement(QString file)
 		throw std::invalid_argument("element is not Readable");
 		return;
 	}
-	QXmlStreamReader* Reader = new QXmlStreamReader(element);
-	Reader->readNextStartElement();
-	if (Reader->name() != "definition")
+	QXmlStreamReader* reader = new QXmlStreamReader(element);
+
+	while (reader->readNextStartElement())
 	{
-		qDebug() << "element has not definition";
-		throw std::invalid_argument("element has not definition");
-		return;
+		if (reader->name() == QLatin1String("definition"))
+			read_definition(reader);
+		else if (reader->name() == QLatin1String("uuid"))
+			read_definition_uuid(reader);
+		else if (reader->name() == "names")
+			read_definition_name(reader);
+		else if (reader->name() == QLatin1String("informations"))
+			read_definition_informations(reader);
+		else if (reader->name() == QLatin1String("kindInformations"))
+			read_definition_kindInformation(reader);
+		else if (reader->name() == QLatin1String("description"))
+			read_definition_description(reader);
+		else
+			reader->skipCurrentElement();
 	}
-	if (Reader->attributes().value("version") == "0.22")
-	{ LoadElement0_22(Reader); }
-	else if (Reader->attributes().value("version") == "0.3")
+
+	if (reader->hasError())
 	{
-		LoadElement0_3(Reader);
-	}
-	else if (Reader->attributes().value("version") == "0.4")
-	{
-		LoadElement0_4(Reader);
-	}
-	else if (Reader->attributes().value("version") == "0.5")
-	{
-		LoadElement0_5(Reader);
-	}
-	else if (Reader->attributes().value("version") == "0.60")
-	{
-		LoadElement0_60(Reader);
-	}
-	else if (Reader->attributes().value("version") == "0.70")
-	{
-		LoadElement0_70(Reader);
-	}
-	else if (Reader->attributes().value("version") == "0.80")
-	{
-		LoadElement0_80(Reader);
+		throw std::invalid_argument(
+			"XMLerror:" + reader->errorString().toStdString()
+			+ " at lineNumber "
+			+ QString::number(reader->lineNumber()).toStdString());
 	}
 }
 
@@ -110,105 +103,11 @@ QVector<QMap<QString, QVariant>> LoadElement::description()
 	return description_element;
 }
 
-void LoadElement::LoadElement0_22(QXmlStreamReader* reader)
-{
-	// definition
-	definition_element.insert(
-		"width",
-		reader->attributes().value("width").toInt());
-	definition_element.insert(
-		"height",
-		reader->attributes().value("height").toInt());
-	definition_element.insert(
-		"hotspot_x",
-		reader->attributes().value("hotspot_x").toInt());
-	definition_element.insert(
-		"hotspot_y",
-		reader->attributes().value("hotspot_y").toInt());
-	definition_element.insert(
-		"type",
-		reader->attributes().value("type").toString());
-	definition_element.insert(
-		"link_type",
-		reader->attributes().value("link_type").toString());
-
-	// uuid
-	reader->readNextStartElement();
-	if (reader->name() != "uuid")
-	{
-		qDebug() << "element has not uuid";
-		throw std::invalid_argument("element has not uuid");
-		return;
-	}
-	uuid_element =
-		QUuid::fromString(reader->attributes().value("uuid").toString());
-}
-
-/**
- * @brief LoadElement::LoadElement0_3
- * @param element
- * loads the element and converts it to the next version
- */
-void LoadElement::LoadElement0_3(QXmlStreamReader* reader)
-{
-	// definition
-	if (reader->name() == QLatin1String("definition")) read_definition(reader);
-
-	while (reader->readNextStartElement())
-	{
-		if (reader->name() == QLatin1String("uuid"))
-			read_definition_uuid(reader);
-		else
-			reader->skipCurrentElement();
-	}
-
-	while (reader->readNextStartElement())
-	{
-		if (reader->name() == "names") { read_definition_name(reader); }
-		else if (reader->name() == QLatin1String("informations"))
-			read_definition_informations(reader);
-		else if (reader->name() == QLatin1String("kindInformations"))
-			read_definition_kindInformation(reader);
-		else if (reader->name() == QLatin1String("description"))
-			read_definition_description(reader);
-		else
-			reader->skipCurrentElement();
-	}
-
-	if (reader->hasError())
-	{
-		throw std::invalid_argument(
-			"XMLerror:" + reader->errorString().toStdString());
-	}
-}
-
-void LoadElement::LoadElement0_4(QXmlStreamReader* reader)
-{
-	LoadElement0_3(reader);
-}
-
-void LoadElement::LoadElement0_5(QXmlStreamReader* reader)
-{
-	LoadElement0_3(reader);
-}
-
-void LoadElement::LoadElement0_60(QXmlStreamReader* reader)
-{
-	LoadElement0_3(reader);
-}
-
-void LoadElement::LoadElement0_70(QXmlStreamReader* reader)
-{
-	LoadElement0_3(reader);
-}
-
-void LoadElement::LoadElement0_80(QXmlStreamReader* reader)
-{
-	LoadElement0_3(reader);
-}
-
 void LoadElement::read_definition(QXmlStreamReader* reader)
 {
+	definition_element.insert(
+		"version",
+		reader->attributes().value("version").toString());
 	definition_element.insert(
 		"width",
 		reader->attributes().value("width").toInt());
@@ -235,6 +134,7 @@ void LoadElement::read_definition_uuid(QXmlStreamReader* reader)
 		reader->isStartElement() && reader->name() == QLatin1String("uuid"));
 	uuid_element =
 		QUuid::fromString(reader->attributes().value("uuid").toString());
+	reader->readNextStartElement();
 }
 
 void LoadElement::read_definition_name(QXmlStreamReader* reader)
@@ -260,6 +160,7 @@ void LoadElement::read_definition_name(QXmlStreamReader* reader)
 void LoadElement::read_definition_kindInformation(QXmlStreamReader* reader)
 {
 	reader->attributes();
+	reader->readNextStartElement();
 }
 
 void LoadElement::read_definition_informations(QXmlStreamReader* reader)
@@ -268,6 +169,7 @@ void LoadElement::read_definition_informations(QXmlStreamReader* reader)
 		reader->isStartElement()
 		&& reader->name() == QLatin1String("informations"));
 	informations_element = reader->readElementText();
+	reader->readNextStartElement();
 }
 
 void LoadElement::read_definition_description(QXmlStreamReader* reader)

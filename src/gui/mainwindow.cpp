@@ -4,6 +4,7 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QDirIterator>
 #include <QFileDialog>
 #include <QStringList>
 
@@ -61,6 +62,10 @@ void MainWindow::createActions()
 	A_Open.setStatusTip(tr("open file"));
 	connect(&A_Open, SIGNAL(triggered()), this, SLOT(open_file()));
 
+	A_Open_dir.setText(RemoveAmpersand(tr("&Open Dir")));
+	A_Open_dir.setStatusTip(tr("open Dir"));
+	connect(&A_Open_dir, SIGNAL(triggered()), this, SLOT(open_dir()));
+
 	/* help */
 	A_AboutQt.setText(RemoveAmpersand(tr("About &Qt")));
 	connect(&A_AboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -73,6 +78,7 @@ void MainWindow::createMenus()
 	menuBar()->addMenu(&M_File);
 
 	M_File.addAction(&A_Open);
+	M_File.addAction(&A_Open_dir);
 
 #ifndef Q_OS_ANDROID
 	M_File.addSeparator();
@@ -121,21 +127,77 @@ void MainWindow::open_file()
 		try
 		{
 			LoadElement test(var);
-			qDebug() << var;
-			qDebug() << "name:            " << test.name();
-			qDebug() << "uuid:            " << test.uuid();
-			qDebug() << "informations:    " << test.informations();
-			qDebug() << "description:     ";
-			for (QMap<QString, QVariant> description : test.description())
-			{ qDebug() << description; }
-			qDebug() << "kindInformation: " << test.kindInformation();
-			qDebug() << "definition:      " << test.definition();
+			//			qDebug() << var;
+			//			qDebug() << "name:            " << test.name();
+			//			qDebug() << "uuid:            " << test.uuid();
+			//			qDebug() << "informations:    " << test.informations();
+			//			qDebug() << "description:     ";
+			//			for (QMap<QString, QVariant> description :
+			// test.description()) 			{ qDebug() << description; }
+			// qDebug()
+			// << "kindInformation: " << test.kindInformation();
+			// qDebug() << "definition:      " << test.definition();
 		}
 		catch (std::exception& e)
 		{
 			qWarning() << e.what(); // what is exception?
 			qWarning() << "!! exception !!" << __LINE__ << __FILE__;
 			qDebug() << "_____________________________________________________";
+		}
+	}
+}
+
+void MainWindow::open_dir()
+{
+
+	QStringList	 elements;
+	QDirIterator it(
+		QFileDialog::getExistingDirectory(
+			this,
+			tr("Open Element dir"),
+			"/home/simon/GIT/qet/elements/"),
+		QStringList() << "*.elmt",
+		QDir::Files,
+		QDirIterator::Subdirectories);
+	while (it.hasNext()) elements << it.next();
+
+	QStringList version_elements;
+	for (QString filename : elements)
+	{
+		try
+		{
+			LoadElement test(filename);
+			//			qDebug() << filename;
+			//			qDebug() << "name:            " << test.name();
+			//			qDebug() << "uuid:            " << test.uuid();
+			//			qDebug() << "informations:    " << test.informations();
+			//			qDebug() << "description:     ";
+			//			for (QMap<QString, QVariant> description :
+			// test.description()) 			{ qDebug() << description; }
+			// qDebug()
+			// << "kindInformation: " << test.kindInformation();
+			//			qDebug() << "version:        "
+			//					 << test.definition()
+			//							.value("version", "! no version
+			// gevonden") 							.toString();
+			version_elements << test.definition()
+									.value("version", "! no version gevonden")
+									.toString();
+		}
+		catch (std::exception& e)
+		{
+			qWarning() << e.what(); // what is exception?
+			qWarning() << "!! exception !!" << __LINE__ << __FILE__;
+			qDebug() << "_____________________________________________________";
+		}
+	}
+	qDebug() << "elements count :" << version_elements.count();
+	for (int var = 0; var < 255; ++var)
+	{
+		if (0 < version_elements.count(QString("0.%1").arg(var)))
+		{
+			qDebug() << QString("nr of version 0.%1 :").arg(var)
+					 << version_elements.count(QString("0.%1").arg(var));
 		}
 	}
 }

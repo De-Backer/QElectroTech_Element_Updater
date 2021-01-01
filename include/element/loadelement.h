@@ -41,14 +41,6 @@ class LoadElement
 	QVector<QMap<QString, QVariant>> description_element;
 	QFile*	element;
 
-	void LoadElement0_22(QXmlStreamReader* reader);
-	void LoadElement0_3(QXmlStreamReader* reader);
-	void LoadElement0_4(QXmlStreamReader* reader);
-	void LoadElement0_5(QXmlStreamReader* reader);
-	void LoadElement0_60(QXmlStreamReader* reader);
-	void LoadElement0_70(QXmlStreamReader* reader);
-	void LoadElement0_80(QXmlStreamReader* reader);
-
 	void read_definition(QXmlStreamReader* reader);
 	void read_definition_uuid(QXmlStreamReader* reader);
 	void read_definition_name(QXmlStreamReader* reader);

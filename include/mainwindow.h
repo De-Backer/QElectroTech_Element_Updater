@@ -30,7 +30,7 @@ class MainWindow : public QMainWindow
 	QAction
 		/* Menu */
 		A_Exit,
-		A_Open,
+		A_Open, A_Open_dir,
 		/* menu window */
 		A_Close, A_CloseAll, A_Tile, A_Cascade,
 		/* help */
@@ -40,5 +40,6 @@ class MainWindow : public QMainWindow
 	QString RemoveAmpersand(QString var);
   private slots:
 	void open_file();
+	void open_dir();
 };
 #endif // MAINWINDOW_H

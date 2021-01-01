@@ -20,7 +20,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		CHECK("" == mytest.definition("link_type").toString().toStdString());
 		// no version in definition but in file => version="0.3"
 		// Todo wat moet dit zijn?
-		REQUIRE_THROWS_WITH(mytest.definition("version"), "unknown value");
+		CHECK("0.3" == mytest.definition("version"));
 
 		// Todo een beter manier vinden voor random waarden
 		REQUIRE_THROWS_WITH(mytest.definition("definition"), "unknown value");
@@ -34,6 +34,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		test_definition.insert("hotspot_y", 0);
 		test_definition.insert("type", "element");
 		test_definition.insert("link_type", "");
+		test_definition.insert("version", "0.3");
 		CHECK(test_definition == mytest.definition());
 
 		// uuid
