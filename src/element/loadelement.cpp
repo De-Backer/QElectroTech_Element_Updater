@@ -36,10 +36,15 @@ LoadElement::LoadElement(QString file)
 			read_definition_informations(reader);
 		else if (reader->name() == QLatin1String("kindInformations"))
 			read_definition_kindInformation(reader);
+		else if (reader->name() == QLatin1String("elementInformations"))
+			read_definition_elementInformations(reader);
 		else if (reader->name() == QLatin1String("description"))
 			read_definition_description(reader);
 		else
+		{
+			qDebug() << reader->name();
 			reader->skipCurrentElement();
+		}
 	}
 
 	if (reader->hasError())
@@ -96,6 +101,11 @@ QMap<QString, QVector<QVariant>> LoadElement::kindInformation()
 	return kindInformation_element;
 }
 
+QMap<QString, QVector<QVariant>> LoadElement::elementInformations()
+{
+	return elementInformations_element;
+}
+
 QString LoadElement::informations() { return informations_element; }
 
 QVector<QMap<QString, QVariant>> LoadElement::description()
@@ -141,26 +151,89 @@ void LoadElement::read_definition_name(QXmlStreamReader* reader)
 {
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("names"));
-	reader->readNextStartElement();
-	Q_ASSERT(
-		reader->isStartElement() && reader->name() == QLatin1String("name"));
 
-	while (reader->name() == "name")
+	while (reader->readNextStartElement())
 	{
-		QString key, value;
+		if (reader->name() == QLatin1String("name"))
+		{
+			Q_ASSERT(
+				reader->isStartElement()
+				&& reader->name() == QLatin1String("name"));
+			QString key, value;
 
-		key	  = reader->attributes().value("lang").toString();
-		value = reader->readElementText();
-		name_element.insert(key, value);
+			key	  = reader->attributes().value("lang").toString();
+			value = reader->readElementText();
+			name_element.insert(key, value);
+		}
+		else
+			reader->skipCurrentElement();
+	}
 
-		reader->readNextStartElement();
+	if (reader->hasError())
+	{
+		throw std::invalid_argument(
+			"XMLerror:" + reader->errorString().toStdString()
+			+ " at lineNumber "
+			+ QString::number(reader->lineNumber()).toStdString());
 	}
 }
 
 void LoadElement::read_definition_kindInformation(QXmlStreamReader* reader)
 {
-	reader->attributes();
-	reader->readNextStartElement();
+	Q_ASSERT(
+		reader->isStartElement()
+		&& reader->name() == QLatin1String("kindInformations"));
+	while (reader->readNextStartElement())
+	{
+		if ((reader->name() == "kindInformation"))
+		{
+			QString			  key;
+			QVector<QVariant> value;
+			key = reader->attributes().value("name").toString();
+			value.append(reader->attributes().value("show").toInt());
+			value.append(reader->readElementText());
+			kindInformation_element.insert(key, value);
+		}
+		else
+			reader->skipCurrentElement();
+	}
+
+	if (reader->hasError())
+	{
+		throw std::invalid_argument(
+			"XMLerror:" + reader->errorString().toStdString()
+			+ " at lineNumber "
+			+ QString::number(reader->lineNumber()).toStdString());
+	}
+}
+
+void LoadElement::read_definition_elementInformations(QXmlStreamReader* reader)
+{
+	Q_ASSERT(
+		reader->isStartElement()
+		&& reader->name() == QLatin1String("elementInformations"));
+	while (reader->readNextStartElement())
+	{
+		if ((reader->name() == "elementInformation"))
+		{
+			QString			  key;
+			QVector<QVariant> value;
+			key = reader->attributes().value("name").toString();
+			value.append(reader->attributes().value("show").toInt());
+			value.append(reader->readElementText());
+			elementInformations_element.insert(key, value);
+		}
+		else
+			reader->skipCurrentElement();
+	}
+
+	if (reader->hasError())
+	{
+		throw std::invalid_argument(
+			"XMLerror:" + reader->errorString().toStdString()
+			+ " at lineNumber "
+			+ QString::number(reader->lineNumber()).toStdString());
+	}
 }
 
 void LoadElement::read_definition_informations(QXmlStreamReader* reader)
@@ -385,8 +458,21 @@ void LoadElement::read_PartDynamicTextField(QXmlStreamReader* reader)
 	var.insert(
 		"uuid",
 		QUuid::fromString(reader->attributes().value("uuid").toString()));
+	while (reader->readNextStartElement())
+	{
+		if (reader->name() == "text")
+			var.insert("text", reader->readElementText());
+		else if (reader->name() == QLatin1String("info_name"))
+			var.insert("info_name", reader->readElementText());
+		else
+			reader->skipCurrentElement();
+	}
+	if (reader->hasError())
+	{
+		throw std::invalid_argument(
+			"XMLerror:" + reader->errorString().toStdString());
+	}
 	description_element.append(var);
-	reader->readNextStartElement();
 }
 
 void LoadElement::read_PartInput(QXmlStreamReader* reader)

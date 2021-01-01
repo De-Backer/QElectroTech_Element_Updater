@@ -168,21 +168,22 @@ void MainWindow::open_dir()
 		{
 			LoadElement test(filename);
 			qDebug() << filename;
-			qDebug() << "name:            " << test.name();
-			qDebug() << "uuid:            " << test.uuid();
-			qDebug() << "informations:    " << test.informations();
-			qDebug() << "description:     ";
-			for (QMap<QString, QVariant> description : test.description())
-			{ qDebug() << description; }
-			qDebug() << "kindInformation: " << test.kindInformation();
-			qDebug() << "definition     : " << test.definition();
-			qDebug() << "version:        "
+			qDebug() << "version:              "
 					 << test.definition()
 							.value("version", "! no version gevonden")
 							.toString();
 			version_elements << test.definition()
 									.value("version", "! no version gevonden")
 									.toString();
+			qDebug() << "definition          : " << test.definition();
+			qDebug() << "uuid:                 " << test.uuid();
+			qDebug() << "name:                 " << test.name();
+			qDebug() << "kindInformation     : " << test.kindInformation();
+			qDebug() << "elementInformations : " << test.elementInformations();
+			qDebug() << "informations:         " << test.informations();
+			qDebug() << "description:          ";
+			for (QMap<QString, QVariant> description : test.description())
+			{ qDebug() << description; }
 		}
 		catch (std::exception& e)
 		{

@@ -23,6 +23,7 @@ class LoadElement
 									 name(QString language);
 	QMap<QString, QString>			 name();
 	QMap<QString, QVector<QVariant>> kindInformation();
+	QMap<QString, QVector<QVariant>> elementInformations();
 	QString							 informations();
 	QVector<QMap<QString, QVariant>> description();
 
@@ -36,6 +37,9 @@ class LoadElement
 	// kindInformation
 	QMap<QString, QVector<QVariant>>
 		kindInformation_element; // name, show, text
+	// elementInformations
+	QMap<QString, QVector<QVariant>>
+		elementInformations_element; // name, show, text
 	// informations_element
 	QString informations_element;
 	QVector<QMap<QString, QVariant>> description_element;
@@ -45,6 +49,7 @@ class LoadElement
 	void read_definition_uuid(QXmlStreamReader* reader);
 	void read_definition_name(QXmlStreamReader* reader);
 	void read_definition_kindInformation(QXmlStreamReader* reader);
+	void read_definition_elementInformations(QXmlStreamReader* reader);
 	void read_definition_informations(QXmlStreamReader* reader);
 	void read_definition_description(QXmlStreamReader* reader);
 
