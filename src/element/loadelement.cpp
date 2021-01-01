@@ -8,7 +8,6 @@
 
 LoadElement::LoadElement(QString file)
 {
-	qDebug() << this << file;
 	element = new QFile(file);
 	if (! element->open(QIODevice::ReadOnly | QIODevice::Text))
 	{
@@ -166,7 +165,10 @@ void LoadElement::read_definition_name(QXmlStreamReader* reader)
 			name_element.insert(key, value);
 		}
 		else
+		{
+			qDebug() << reader->name();
 			reader->skipCurrentElement();
+		}
 	}
 
 	if (reader->hasError())
@@ -195,7 +197,10 @@ void LoadElement::read_definition_kindInformation(QXmlStreamReader* reader)
 			kindInformation_element.insert(key, value);
 		}
 		else
+		{
+			qDebug() << reader->name();
 			reader->skipCurrentElement();
+		}
 	}
 
 	if (reader->hasError())
@@ -224,7 +229,10 @@ void LoadElement::read_definition_elementInformations(QXmlStreamReader* reader)
 			elementInformations_element.insert(key, value);
 		}
 		else
+		{
+			qDebug() << reader->name();
 			reader->skipCurrentElement();
+		}
 	}
 
 	if (reader->hasError())
@@ -271,7 +279,10 @@ void LoadElement::read_definition_description(QXmlStreamReader* reader)
 		else if (reader->name() == QLatin1String("input"))
 			read_PartInput(reader);
 		else
+		{
+			qDebug() << reader->name();
 			reader->skipCurrentElement();
+		}
 	}
 	if (reader->hasError())
 	{

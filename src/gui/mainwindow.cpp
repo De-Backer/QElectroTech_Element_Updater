@@ -121,22 +121,25 @@ void MainWindow::open_file()
 		tr("Open Element"),
 		"/home/simon/GIT/qet/elements/",
 		tr("Element Files (*.elmt)"));
-	qDebug() << "QStringList:" << data;
-	for (QString var : data)
+	for (QString filename : data)
 	{
 		try
 		{
-			LoadElement test(var);
-			//			qDebug() << var;
-			//			qDebug() << "name:            " << test.name();
-			//			qDebug() << "uuid:            " << test.uuid();
-			//			qDebug() << "informations:    " << test.informations();
-			//			qDebug() << "description:     ";
-			//			for (QMap<QString, QVariant> description :
-			// test.description()) 			{ qDebug() << description; }
-			// qDebug()
-			// << "kindInformation: " << test.kindInformation();
-			// qDebug() << "definition:      " << test.definition();
+			LoadElement test(filename);
+			qDebug() << "file:" << filename;
+			qDebug() << "version:              "
+					 << test.definition()
+							.value("version", "! no version gevonden")
+							.toString();
+			qDebug() << "definition          : " << test.definition();
+			qDebug() << "uuid:                 " << test.uuid();
+			qDebug() << "name:                 " << test.name();
+			qDebug() << "kindInformation     : " << test.kindInformation();
+			qDebug() << "elementInformations : " << test.elementInformations();
+			qDebug() << "informations:         " << test.informations();
+			qDebug() << "description:          ";
+			for (QMap<QString, QVariant> description : test.description())
+			{ qDebug() << description; }
 		}
 		catch (std::exception& e)
 		{
@@ -167,7 +170,7 @@ void MainWindow::open_dir()
 		try
 		{
 			LoadElement test(filename);
-			qDebug() << filename;
+			qDebug() << "file:" << filename;
 			qDebug() << "version:              "
 					 << test.definition()
 							.value("version", "! no version gevonden")
