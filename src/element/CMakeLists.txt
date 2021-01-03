@@ -38,7 +38,7 @@ find_package(
 set(HEADER_LIST
   "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/loadelement.h"
   "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/convertelement.h"
-  "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/element.h"
+  "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/virtualelement.h"
   "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/safeelement.h"
   )
 
@@ -46,7 +46,7 @@ set(HEADER_LIST
 add_library(element
   loadelement.cpp
   convertelement.cpp
-  element.cpp
+  virtualelement.cpp
   safeelement.cpp
   ${HEADER_LIST}
   )

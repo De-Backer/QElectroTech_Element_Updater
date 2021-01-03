@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 
+#include "../../include/element/convertelement.h"
 #include "../../include/element/loadelement.h"
+#include "../../include/element/safeelement.h"
+#include "../../include/element/virtualelement.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -125,7 +128,18 @@ void MainWindow::open_file()
 	{
 		try
 		{
-			LoadElement test(filename);
+			qDebug() << "LoadElement";
+			LoadElement test(filename); // 1 Load Element
+			qDebug() << "Convert Element";
+			ConvertElement cetest(test); // 2 Convert Element
+			qDebug() << "Element";
+			VElement test_element = cetest.GetElement(); // 3 Element
+			qDebug() << "SafeElement";
+			SafeElement test_safe(
+				filename + "test",
+				test_element); // 4 Safe Element
+
+			// 1 qDebug info-->
 			qDebug() << "file:" << filename;
 			qDebug() << "version:              "
 					 << test.definition()
@@ -140,6 +154,7 @@ void MainWindow::open_file()
 			qDebug() << "description:          ";
 			for (QMap<QString, QVariant> description : test.description())
 			{ qDebug() << description; }
+			// <--1 qDebug info
 		}
 		catch (std::exception& e)
 		{
@@ -169,7 +184,12 @@ void MainWindow::open_dir()
 	{
 		try
 		{
-			LoadElement test(filename);
+			LoadElement	   test(filename); // 1 Load Element
+			ConvertElement CElem(test);	   // 2 Convert Element
+			// 3 Element
+			// 4 Safe Element
+
+			// 1 qDebug info-->
 			qDebug() << "file: " + filename;
 			qDebug() << "version             : "
 					 << test.definition()
@@ -187,6 +207,7 @@ void MainWindow::open_dir()
 					 << test.elementInformations().size();
 			qDebug() << "informations        :" << test.informations();
 			qDebug() << "description         : " << test.description().size();
+			// <--1 qDebug info
 		}
 		catch (std::exception& e)
 		{
