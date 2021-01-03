@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 
-#include "element/loadelement.h"
+#include "../../include/element/loadelement.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -170,23 +170,23 @@ void MainWindow::open_dir()
 		try
 		{
 			LoadElement test(filename);
-			qDebug() << "file:" << filename;
-			qDebug() << "version:              "
+			qDebug() << "file: " + filename;
+			qDebug() << "version             : "
 					 << test.definition()
 							.value("version", "! no version gevonden")
 							.toString();
 			version_elements << test.definition()
 									.value("version", "! no version gevonden")
 									.toString();
-			qDebug() << "definition          : " << test.definition();
-			qDebug() << "uuid:                 " << test.uuid();
-			qDebug() << "name:                 " << test.name();
-			qDebug() << "kindInformation     : " << test.kindInformation();
-			qDebug() << "elementInformations : " << test.elementInformations();
-			qDebug() << "informations:         " << test.informations();
-			qDebug() << "description:          ";
-			for (QMap<QString, QVariant> description : test.description())
-			{ qDebug() << description; }
+			qDebug() << "definition          : " << test.definition().size();
+			qDebug() << "uuid                : " << test.uuid();
+			qDebug() << "name                : " << test.name().size();
+			qDebug() << "kindInformation     : "
+					 << test.kindInformation().size();
+			qDebug() << "elementInformations : "
+					 << test.elementInformations().size();
+			qDebug() << "informations        :" << test.informations();
+			qDebug() << "description         : " << test.description().size();
 		}
 		catch (std::exception& e)
 		{

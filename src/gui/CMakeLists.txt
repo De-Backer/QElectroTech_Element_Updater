@@ -35,7 +35,7 @@ find_package(
   )
 
 set(HEADER_LIST
-  "${QElectroTech_Element_Updater_SOURCE_DIR}/include/mainwindow.h"
+  "${QElectroTech_Element_Updater_SOURCE_DIR}/include/gui/mainwindow.h"
   )
 
 # Make an automatic library - will be static or dynamic based on user setting
@@ -47,7 +47,7 @@ add_library(gui
 # We need this directory, and users of our library will need it too
 target_include_directories(gui
   PUBLIC
-  ../../include
+  ../../include/gui
   )
 
 # This depends on (header only) boost

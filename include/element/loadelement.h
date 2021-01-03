@@ -28,22 +28,14 @@ class LoadElement
 	QVector<QMap<QString, QVariant>> description();
 
   private:
-	// definition
-	QMap<QString, QVariant> definition_element;
-	// uuid
-	QUuid uuid_element = QUuid::createUuid();
-	// name
-	QMap<QString, QString> name_element;
-	// kindInformation
-	QMap<QString, QVector<QVariant>>
-		kindInformation_element; // name, show, text
-	// elementInformations
-	QMap<QString, QVector<QVariant>>
-		elementInformations_element; // name, show, text
-	// informations_element
-	QString informations_element;
+	QFile*							 element;
+	QUuid							 uuid_element; //= QUuid::createUuid();
+	QMap<QString, QVariant>			 definition_element;
+	QMap<QString, QString>			 name_element;
+	QMap<QString, QVector<QVariant>> kindInformation_element;
+	QMap<QString, QVector<QVariant>> elementInformations_element;
+	QString							 informations_element;
 	QVector<QMap<QString, QVariant>> description_element;
-	QFile*	element;
 
 	void read_definition(QXmlStreamReader* reader);
 	void read_definition_uuid(QXmlStreamReader* reader);

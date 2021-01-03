@@ -37,11 +37,17 @@ find_package(
   )
 set(HEADER_LIST
   "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/loadelement.h"
+  "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/convertelement.h"
+  "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/element.h"
+  "${QElectroTech_Element_Updater_SOURCE_DIR}/include/element/safeelement.h"
   )
 
 # Make an automatic library - will be static or dynamic based on user setting
 add_library(element
   loadelement.cpp
+  convertelement.cpp
+  element.cpp
+  safeelement.cpp
   ${HEADER_LIST}
   )
 
