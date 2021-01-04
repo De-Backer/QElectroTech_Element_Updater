@@ -133,7 +133,8 @@ void MainWindow::open_file()
 			qDebug() << "Convert Element";
 			ConvertElement cetest(test); // 2 Convert Element
 			qDebug() << "Element";
-			VElement test_element = cetest.GetElement(); // 3 Element
+			VElement test_element = cetest.GetElement(); // 3
+			// Element
 			qDebug() << "SafeElement";
 			SafeElement test_safe(
 				filename + "test",

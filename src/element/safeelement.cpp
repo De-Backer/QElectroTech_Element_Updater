@@ -7,6 +7,16 @@
 SafeElement::SafeElement(QString outputfile, VElement element)
 {
 	element_data = element;
+	qDebug() << "----- SafeElement ";
+	qDebug() << element.definition();
+	qDebug() << element_data.definition();
+	qDebug() << element_data.description();
+	qDebug() << element_data.elementInformations();
+	qDebug() << element_data.informations();
+	qDebug() << element_data.kindInformation();
+	qDebug() << element_data.name();
+	qDebug() << element_data.uuid();
+	qDebug() << " SafeElement ----- ";
 
 	file = new QFile(outputfile);
 	if (! file->open(QIODevice::WriteOnly | QIODevice::Text))
@@ -28,7 +38,12 @@ SafeElement::SafeElement(QString outputfile, VElement element)
 	writer->writeEndDocument();
 }
 
-SafeElement::~SafeElement() {}
+SafeElement::~SafeElement()
+{
+	file->close();
+	file->deleteLater();
+	delete file;
+}
 
 void SafeElement::write_definition(QXmlStreamWriter* writer)
 {
@@ -127,74 +142,221 @@ void SafeElement::write_definition_description(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartLine(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "line");
-	qDebug() << "write_PartLine" << element_data.description().indexOf(var);
 	writer->writeComment("line");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "line")
+		{
+			qDebug() << "write_PartLine" << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }
 
 void SafeElement::write_PartRectangle(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "rect");
-	qDebug() << "write_PartRectangle"
-			 << element_data.description().indexOf(var);
 	writer->writeComment("rect");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "rect")
+		{
+			qDebug() << "write_Partrect" << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }
 
 void SafeElement::write_PartEllipse(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "ellipse");
-	qDebug() << "write_PartEllipse" << element_data.description().indexOf(var);
 	writer->writeComment("ellipse");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "ellipse")
+		{
+			qDebug() << "write_PartEllipse"
+					 << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }
 
 void SafeElement::write_PartCircle(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "circle");
-	qDebug() << "write_PartCircle" << element_data.description().indexOf(var);
 	writer->writeComment("circle");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "circle")
+		{
+			qDebug() << "write_PartCircle"
+					 << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }
 
 void SafeElement::write_PartPolygon(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "polygon");
-	qDebug() << "write_PartPolygon" << element_data.description().indexOf(var);
 	writer->writeComment("polygon");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "polygon")
+		{
+			qDebug() << "write_PartPolygon"
+					 << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }
 
 void SafeElement::write_PartTerminal(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "terminal");
-	qDebug() << "write_PartTerminal" << element_data.description().indexOf(var);
 	writer->writeComment("terminal");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "terminal")
+		{
+			qDebug() << "write_PartTerminal"
+					 << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }
 
 void SafeElement::write_PartText(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "text");
-	qDebug() << "write_PartText" << element_data.description().indexOf(var);
 	writer->writeComment("text");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "text")
+		{
+			qDebug() << "write_PartText" << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }
 
 void SafeElement::write_PartArc(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "arc");
-	qDebug() << "write_PartArc" << element_data.description().indexOf(var);
 	writer->writeComment("arc");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "arc")
+		{
+			qDebug() << "write_PartArc" << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }
 
 void SafeElement::write_PartDynamicTextField(QXmlStreamWriter* writer)
 {
-	QMap<QString, QVariant> var;
-	var.insert("name", "dynamic_text");
-	qDebug() << "write_PartDynamicTextField"
-			 << element_data.description().indexOf(var);
 	writer->writeComment("dynamic_text");
+	for (int var = 0; var < element_data.description().size(); ++var)
+	{
+		if (element_data.description().at(var).value("name").toString()
+			== "dynamic_text")
+		{
+			qDebug() << "write_PartDynamicTextField"
+					 << element_data.description().at(var);
+			writer->writeStartElement(
+				element_data.description().at(var).value("name").toString());
+			QMapIterator<QString, QVariant> data(
+				element_data.description().at(var));
+			while (data.hasNext())
+			{
+				data.next();
+				if (data.key() != "name")
+					writer->writeAttribute(data.key(), data.value().toString());
+			}
+			writer->writeEndElement();
+		}
+	}
 }

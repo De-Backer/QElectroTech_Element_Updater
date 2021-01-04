@@ -1,41 +1,69 @@
 #include "virtualelement.h"
 
+#include <QDebug>
+
 VElement::VElement() {}
+
+VElement::VElement(
+	QMap<QString, QVariant>			 definition,
+	QUuid							 uuid,
+	QMap<QString, QString>			 name,
+	QMap<QString, QVector<QVariant>> kindInformation,
+	QMap<QString, QVector<QVariant>> elementInformations,
+	QString							 informations,
+	QVector<QMap<QString, QVariant>> description)
+{
+	Definition			= definition;
+	Uuid				= uuid;
+	Name				= name;
+	KindInformation		= kindInformation;
+	ElementInformations = elementInformations;
+	Informations		= informations;
+	Description			= description;
+}
 
 VElement::~VElement() {}
 
-QMap<QString, QVariant> VElement::definition()
+VElement& VElement::operator=(const VElement& data)
 {
-	QMap<QString, QVariant> var;
-	return var;
+	Definition			= data.Definition;
+	Uuid				= data.Uuid;
+	Name				= data.Name;
+	KindInformation		= data.KindInformation;
+	ElementInformations = data.ElementInformations;
+	Informations		= data.Informations;
+	Description			= data.Description;
+
+	return (*this);
 }
-QUuid VElement::uuid()
-{
-	QUuid var;
-	return var;
-}
-QMap<QString, QString> VElement::name()
-{
-	QMap<QString, QString> var;
-	return var;
-}
+
+QMap<QString, QVariant>			 VElement::definition() { return Definition; }
+QUuid							 VElement::uuid() { return Uuid; }
+QMap<QString, QString>			 VElement::name() { return Name; }
 QMap<QString, QVector<QVariant>> VElement::kindInformation()
 {
-	QMap<QString, QVector<QVariant>> var;
-	return var;
+	return KindInformation;
 }
 QMap<QString, QVector<QVariant>> VElement::elementInformations()
 {
-	QMap<QString, QVector<QVariant>> var;
-	return var;
+	return ElementInformations;
 }
-QString VElement::informations()
+QString VElement::informations() { return Informations; }
+QVector<QMap<QString, QVariant>> VElement::description() { return Description; }
+
+void VElement::definition(QMap<QString, QVariant> data) { Definition = data; }
+void VElement::uuid(QUuid data) { Uuid = data; }
+void VElement::name(QMap<QString, QString> data) { Name = data; }
+void VElement::kindInformation(QMap<QString, QVector<QVariant>> data)
 {
-	QString var;
-	return var;
+	KindInformation = data;
 }
-QVector<QMap<QString, QVariant>> VElement::description()
+void VElement::elementInformations(QMap<QString, QVector<QVariant>> data)
 {
-	QVector<QMap<QString, QVariant>> var;
-	return var;
+	ElementInformations = data;
+}
+void VElement::informations(QString data) { Informations = data; }
+void VElement::description(QVector<QMap<QString, QVariant>> data)
+{
+	Description = data;
 }
