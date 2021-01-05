@@ -101,7 +101,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		QVector<QMap<QString, QVariant>> test_description;
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "line");
+			test_var.insert("XML_ElementName", "line");
 			test_var.insert("x1", -5);
 			test_var.insert("y1", 13);
 			test_var.insert("x2", 4);
@@ -118,7 +118,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "line");
+			test_var.insert("XML_ElementName", "line");
 			test_var.insert("x1", -1);
 			test_var.insert("y1", 12);
 			test_var.insert("x2", -1);
@@ -136,7 +136,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "input");
+			test_var.insert("XML_ElementName", "input");
 			test_var.insert("rotate", "true");
 			test_var.insert("size", 5);
 			test_var.insert("text", "6");
@@ -147,7 +147,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "input");
+			test_var.insert("XML_ElementName", "input");
 			test_var.insert("rotate", "true");
 			test_var.insert("size", 8);
 			test_var.insert("text", "_");
@@ -158,7 +158,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "line");
+			test_var.insert("XML_ElementName", "line");
 			test_var.insert("x1", 0);
 			test_var.insert("y1", 12);
 			test_var.insert("x2", 0);
@@ -176,7 +176,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "line");
+			test_var.insert("XML_ElementName", "line");
 			test_var.insert("x1", 0);
 			test_var.insert("y1", 9);
 			test_var.insert("x2", 0);
@@ -194,7 +194,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "line");
+			test_var.insert("XML_ElementName", "line");
 			test_var.insert("x1", 1);
 			test_var.insert("y1", 12);
 			test_var.insert("x2", 1);
@@ -212,7 +212,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "arc");
+			test_var.insert("XML_ElementName", "arc");
 			test_var.insert("angle", -180);
 			test_var.insert("antialias", "true");
 			test_var.insert("height", 6);
@@ -228,22 +228,22 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "terminal");
+			test_var.insert("XML_ElementName", "terminal");
 			test_var.insert("nameHidden", "");
 			test_var.insert("number", 0);
 			test_var.insert("orientation", "n");
-			test_var.insert("terminalname", "");
+			test_var.insert("name", "");
 			test_var.insert("x", 0);
 			test_var.insert("y", 0);
 			test_description.append(test_var);
 		}
 		{
 			QMap<QString, QVariant> test_var;
-			test_var.insert("name", "terminal");
+			test_var.insert("XML_ElementName", "terminal");
 			test_var.insert("nameHidden", "");
 			test_var.insert("number", 0);
 			test_var.insert("orientation", "s");
-			test_var.insert("terminalname", "");
+			test_var.insert("name", "");
 			test_var.insert("x", 0);
 			test_var.insert("y", 30);
 			test_description.append(test_var);

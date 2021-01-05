@@ -135,12 +135,14 @@ void LoadElement::read_definition(QXmlStreamReader* reader)
 	definition_element.insert(
 		"link_type",
 		reader->attributes().value("link_type").toString());
-	definition_element.insert(
-		"ic",
-		reader->attributes().value("ic").toString());
-	definition_element.insert(
-		"orientation",
-		reader->attributes().value("orientation").toString());
+	if (reader->attributes().hasAttribute("ic"))
+		definition_element.insert(
+			"ic",
+			reader->attributes().value("ic").toString());
+	if (reader->attributes().hasAttribute("orientation"))
+		definition_element.insert(
+			"orientation",
+			reader->attributes().value("orientation").toString());
 }
 
 void LoadElement::read_definition_uuid(QXmlStreamReader* reader)
