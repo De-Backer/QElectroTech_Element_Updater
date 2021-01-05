@@ -141,20 +141,19 @@ void MainWindow::open_file()
 				test_element); // 4 Safe Element
 
 			// 1 qDebug info-->
-			qDebug() << "file:" << filename;
-			qDebug() << "version:              "
-					 << test.definition()
-							.value("version", "! no version gevonden")
-							.toString();
-			qDebug() << "definition          : " << test.definition();
-			qDebug() << "uuid:                 " << test.uuid();
-			qDebug() << "name:                 " << test.name();
-			qDebug() << "kindInformation     : " << test.kindInformation();
-			qDebug() << "elementInformations : " << test.elementInformations();
-			qDebug() << "informations:         " << test.informations();
-			qDebug() << "description:          ";
-			for (QMap<QString, QVariant> description : test.description())
-			{ qDebug() << description; }
+			//			qDebug() << "file:" << filename;
+			//			qDebug() << "version:              "
+			//					 << test.definition()
+			//							.value("version", "! no version
+			//gevonden") 							.toString(); 			qDebug() << "definition          : " <<
+			//test.definition(); 			qDebug() << "uuid:                 " <<
+			//test.uuid(); 			qDebug() << "name:                 " << test.name();
+			//			qDebug() << "kindInformation     : " <<
+			//test.kindInformation(); 			qDebug() << "elementInformations : " <<
+			//test.elementInformations(); 			qDebug() << "informations:         "
+			//<< test.informations(); 			qDebug() << "description:          "; 			for
+			//(QMap<QString, QVariant> description : test.description()) 			{
+			//qDebug() << description; }
 			// <--1 qDebug info
 		}
 		catch (std::exception& e)
@@ -163,6 +162,11 @@ void MainWindow::open_file()
 			qWarning() << "!! exception !!" << __LINE__ << __FILE__;
 			qDebug() << "_____________________________________________________";
 		}
+		catch (...)
+		{
+			qWarning() << "!! exception !!" << __LINE__ << __FILE__;
+		}
+		qDebug() << "MainWindow: " << filename;
 	}
 }
 
