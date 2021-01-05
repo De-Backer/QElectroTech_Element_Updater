@@ -34,15 +34,18 @@ SafeElement::SafeElement(QString outputfile, VElement element)
 	QXmlStreamWriter* writer = new QXmlStreamWriter(file);
 	writer->setAutoFormatting(true);
 	writer->writeStartDocument();
+	writer->writeComment("note: this is still in the testing phase!");
 	write_definition(writer);
+	writer->writeComment("note: this is still in the testing phase!");
 	writer->writeEndDocument();
+	file->close();
 }
 
 SafeElement::~SafeElement()
 {
-	file->close();
-	file->deleteLater();
-	delete file;
+	// file->close();
+	//	file->deleteLater();
+	//	delete file;
 }
 
 void SafeElement::write_definition(QXmlStreamWriter* writer)
@@ -145,18 +148,23 @@ void SafeElement::write_PartLine(QXmlStreamWriter* writer)
 	writer->writeComment("line");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "line")
 		{
 			qDebug() << "write_PartLine" << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
 			writer->writeEndElement();
@@ -169,18 +177,23 @@ void SafeElement::write_PartRectangle(QXmlStreamWriter* writer)
 	writer->writeComment("rect");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "rect")
 		{
 			qDebug() << "write_Partrect" << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
 			writer->writeEndElement();
@@ -193,19 +206,24 @@ void SafeElement::write_PartEllipse(QXmlStreamWriter* writer)
 	writer->writeComment("ellipse");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "ellipse")
 		{
 			qDebug() << "write_PartEllipse"
 					 << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
 			writer->writeEndElement();
@@ -218,19 +236,24 @@ void SafeElement::write_PartCircle(QXmlStreamWriter* writer)
 	writer->writeComment("circle");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "circle")
 		{
 			qDebug() << "write_PartCircle"
 					 << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
 			writer->writeEndElement();
@@ -243,19 +266,24 @@ void SafeElement::write_PartPolygon(QXmlStreamWriter* writer)
 	writer->writeComment("polygon");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "polygon")
 		{
 			qDebug() << "write_PartPolygon"
 					 << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
 			writer->writeEndElement();
@@ -268,19 +296,24 @@ void SafeElement::write_PartTerminal(QXmlStreamWriter* writer)
 	writer->writeComment("terminal");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "terminal")
 		{
 			qDebug() << "write_PartTerminal"
 					 << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
 			writer->writeEndElement();
@@ -293,18 +326,23 @@ void SafeElement::write_PartText(QXmlStreamWriter* writer)
 	writer->writeComment("text");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "text")
 		{
 			qDebug() << "write_PartText" << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
 			writer->writeEndElement();
@@ -317,18 +355,23 @@ void SafeElement::write_PartArc(QXmlStreamWriter* writer)
 	writer->writeComment("arc");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "arc")
 		{
 			qDebug() << "write_PartArc" << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
 			writer->writeEndElement();
@@ -341,21 +384,44 @@ void SafeElement::write_PartDynamicTextField(QXmlStreamWriter* writer)
 	writer->writeComment("dynamic_text");
 	for (int var = 0; var < element_data.description().size(); ++var)
 	{
-		if (element_data.description().at(var).value("name").toString()
+		if (element_data.description()
+				.at(var)
+				.value("XML_ElementName")
+				.toString()
 			== "dynamic_text")
 		{
 			qDebug() << "write_PartDynamicTextField"
 					 << element_data.description().at(var);
-			writer->writeStartElement(
-				element_data.description().at(var).value("name").toString());
+			writer->writeStartElement(element_data.description()
+										  .at(var)
+										  .value("XML_ElementName")
+										  .toString());
 			QMapIterator<QString, QVariant> data(
 				element_data.description().at(var));
 			while (data.hasNext())
 			{
 				data.next();
-				if (data.key() != "name")
+				if (data.key() != "XML_ElementName" && data.key() != "text"
+					&& data.key() != "info_name")
 					writer->writeAttribute(data.key(), data.value().toString());
 			}
+			{
+				writer->writeStartElement("text");
+				writer->writeCharacters(element_data.description()
+											.at(var)
+											.value("text")
+											.toString());
+				writer->writeEndElement();
+			}
+			{
+				writer->writeStartElement("info_name");
+				writer->writeCharacters(element_data.description()
+											.at(var)
+											.value("info_name")
+											.toString());
+				writer->writeEndElement();
+			}
+
 			writer->writeEndElement();
 		}
 	}

@@ -135,6 +135,12 @@ void LoadElement::read_definition(QXmlStreamReader* reader)
 	definition_element.insert(
 		"link_type",
 		reader->attributes().value("link_type").toString());
+	definition_element.insert(
+		"ic",
+		reader->attributes().value("ic").toString());
+	definition_element.insert(
+		"orientation",
+		reader->attributes().value("orientation").toString());
 }
 
 void LoadElement::read_definition_uuid(QXmlStreamReader* reader)
@@ -296,7 +302,7 @@ void LoadElement::read_PartLine(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("line"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x1", reader->attributes().value("x1").toInt());
 	var.insert("y1", reader->attributes().value("y1").toInt());
 	var.insert("x2", reader->attributes().value("x2").toInt());
@@ -317,7 +323,7 @@ void LoadElement::read_PartRectangle(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("rect"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x", reader->attributes().value("x").toDouble());
 	var.insert("y", reader->attributes().value("y").toDouble());
 	var.insert("height", reader->attributes().value("height").toDouble());
@@ -334,7 +340,7 @@ void LoadElement::read_PartEllipse(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("ellipse"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x", reader->attributes().value("x").toDouble());
 	var.insert("y", reader->attributes().value("y").toDouble());
 	var.insert("height", reader->attributes().value("height").toDouble());
@@ -351,7 +357,7 @@ void LoadElement::read_PartCircle(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("circle"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x", reader->attributes().value("x").toDouble());
 	var.insert("y", reader->attributes().value("y").toDouble());
 	var.insert("diameter", reader->attributes().value("diameter").toDouble());
@@ -366,7 +372,7 @@ void LoadElement::read_PartPolygon(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("polygon"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("style", reader->attributes().value("style").toString());
 	var.insert("antialias", reader->attributes().value("antialias").toString());
 	var.insert("closed", reader->attributes().value("closed").toString());
@@ -392,17 +398,19 @@ void LoadElement::read_PartTerminal(QXmlStreamReader* reader)
 		reader->isStartElement()
 		&& reader->name() == QLatin1String("terminal"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x", reader->attributes().value("x").toDouble());
 	var.insert("y", reader->attributes().value("y").toDouble());
 	var.insert(
 		"orientation",
 		reader->attributes().value("orientation").toString());
 	var.insert("number", reader->attributes().value("number").toInt());
-	var.insert("terminalname", reader->attributes().value("name").toString());
+	var.insert("name", reader->attributes().value("name").toString());
 	var.insert(
 		"nameHidden",
 		reader->attributes().value("nameHidden").toString());
+	if (reader->attributes().hasAttribute("uuid"))
+		var.insert("uuid", reader->attributes().value("uuid").toString());
 	description_element.append(var);
 
 	reader->readNextStartElement();
@@ -413,7 +421,7 @@ void LoadElement::read_PartText(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("text"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x", reader->attributes().value("x").toDouble());
 	var.insert("y", reader->attributes().value("y").toDouble());
 	var.insert("rotation", reader->attributes().value("rotation").toString());
@@ -430,7 +438,7 @@ void LoadElement::read_PartArc(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("arc"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x", reader->attributes().value("x").toDouble());
 	var.insert("y", reader->attributes().value("y").toDouble());
 	var.insert("height", reader->attributes().value("height").toDouble());
@@ -449,7 +457,7 @@ void LoadElement::read_PartDynamicTextField(QXmlStreamReader* reader)
 		reader->isStartElement()
 		&& reader->name() == QLatin1String("dynamic_text"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x", reader->attributes().value("x").toDouble());
 	var.insert("y", reader->attributes().value("y").toDouble());
 	var.insert("z", reader->attributes().value("z").toDouble());
@@ -491,7 +499,7 @@ void LoadElement::read_PartInput(QXmlStreamReader* reader)
 	Q_ASSERT(
 		reader->isStartElement() && reader->name() == QLatin1String("input"));
 	QMap<QString, QVariant> var;
-	var.insert("name", reader->name().toString());
+	var.insert("XML_ElementName", reader->name().toString());
 	var.insert("x", reader->attributes().value("x").toDouble());
 	var.insert("y", reader->attributes().value("y").toDouble());
 	var.insert("size", reader->attributes().value("size").toDouble());
