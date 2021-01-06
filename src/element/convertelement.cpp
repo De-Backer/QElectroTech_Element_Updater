@@ -1,6 +1,8 @@
 #include "convertelement.h"
 
 #include <QDebug>
+#include <QMap>
+#include <QMapIterator>
 #include <QUuid>
 
 ConvertElement::ConvertElement(LoadElement element)
