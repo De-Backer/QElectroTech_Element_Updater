@@ -11,12 +11,12 @@
 class ConvertElement
 {
   public:
-	ConvertElement(LoadElement element);
-	~ConvertElement();
-	VElement GetElement();
+    ConvertElement(LoadElement element);
+    ~ConvertElement();
+    VElement GetElement();
 
   private:
-	VElement new_element;
+    VElement new_element;
 };
 
 #endif // CONVERTELEMENT_H

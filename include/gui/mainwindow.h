@@ -11,35 +11,35 @@
 
 class MainWindow : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
   public:
-	MainWindow(QWidget* parent = nullptr);
-	~MainWindow();
+    MainWindow(QWidget* parent = nullptr);
+    ~MainWindow();
 
   private:
-	QMdiArea mdiArea;
+    QMdiArea mdiArea;
 
-	QMenu
-		/* Menu */
-		M_File,
-		/* menu window */
-		M_Window,
-		/* help */
-		M_Help;
-	QAction
-		/* Menu */
-		A_Exit,
-		A_Open, A_Open_dir,
-		/* menu window */
-		A_Close, A_CloseAll, A_Tile, A_Cascade,
-		/* help */
-		A_AboutQt;
-	void	createActions();
-	void	createMenus();
-	QString RemoveAmpersand(QString var);
+    QMenu
+        /* Menu */
+        M_File,
+        /* menu window */
+        M_Window,
+        /* help */
+        M_Help;
+    QAction
+        /* Menu */
+        A_Exit,
+        A_Open, A_Open_dir,
+        /* menu window */
+        A_Close, A_CloseAll, A_Tile, A_Cascade,
+        /* help */
+        A_AboutQt;
+    void    createActions();
+    void    createMenus();
+    QString RemoveAmpersand(QString var);
   private slots:
-	void open_file();
-	void open_dir();
+    void open_file();
+    void open_dir();
 };
 #endif // MAINWINDOW_H
