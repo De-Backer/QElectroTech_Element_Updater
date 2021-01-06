@@ -24,19 +24,6 @@ VElement::VElement(
 
 VElement::~VElement() {}
 
-VElement& VElement::operator=(const VElement& data)
-{
-	Definition			= data.Definition;
-	Uuid				= data.Uuid;
-	Name				= data.Name;
-	KindInformation		= data.KindInformation;
-	ElementInformations = data.ElementInformations;
-	Informations		= data.Informations;
-	Description			= data.Description;
-
-	return (*this);
-}
-
 QMap<QString, QVariant>			 VElement::definition() { return Definition; }
 QUuid							 VElement::uuid() { return Uuid; }
 QMap<QString, QString>			 VElement::name() { return Name; }

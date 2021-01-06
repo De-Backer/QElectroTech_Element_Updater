@@ -21,8 +21,6 @@ class VElement
 		QVector<QMap<QString, QVariant>> description);
 	~VElement();
 
-	VElement& operator=(const VElement& data);
-
 	// get
 	QMap<QString, QVariant>			 definition();
 	QUuid							 uuid();
