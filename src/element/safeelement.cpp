@@ -18,35 +18,31 @@ SafeElement::SafeElement(QString outputfile, VElement element)
 	qDebug() << element_data.uuid();
 	qDebug() << " SafeElement ----- ";
 
-	file = new QFile(outputfile);
-	if (! file->open(QIODevice::WriteOnly | QIODevice::Text))
+	QFile file(outputfile);
+	if (! file.open(QIODevice::WriteOnly | QIODevice::Text))
 	{
 		qDebug() << "file is not open";
 		throw std::invalid_argument("file is not open");
 		return;
 	}
-	if (! file->isWritable())
+	if (! file.isWritable())
 	{
 		qDebug() << "file is not Writable";
 		throw std::invalid_argument("file is not Writable");
 		return;
 	}
-	QXmlStreamWriter* writer = new QXmlStreamWriter(file);
+	QXmlStreamWriter* writer = new QXmlStreamWriter(&file);
 	writer->setAutoFormatting(true);
 	writer->writeStartDocument();
 	writer->writeComment("note: this is still in the testing phase!");
 	write_definition(writer);
 	writer->writeComment("note: this is still in the testing phase!");
 	writer->writeEndDocument();
-	file->close();
+	file.close();
+	delete writer;
 }
 
-SafeElement::~SafeElement()
-{
-	// file->close();
-	//	file->deleteLater();
-	//	delete file;
-}
+SafeElement::~SafeElement() {}
 
 void SafeElement::write_definition(QXmlStreamWriter* writer)
 {

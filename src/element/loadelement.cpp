@@ -8,20 +8,21 @@
 
 LoadElement::LoadElement(QString file)
 {
-	element = new QFile(file);
-	if (! element->open(QIODevice::ReadOnly | QIODevice::Text))
+	QFile element(file);
+
+	if (! element.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		qDebug() << "element is not open";
 		throw std::invalid_argument("element is not open");
 		return;
 	}
-	if (! element->isReadable())
+	if (! element.isReadable())
 	{
 		qDebug() << "element is not Readable";
 		throw std::invalid_argument("element is not Readable");
 		return;
 	}
-	QXmlStreamReader* reader = new QXmlStreamReader(element);
+	QXmlStreamReader* reader = new QXmlStreamReader(&element);
 
 	while (reader->readNextStartElement())
 	{
@@ -53,6 +54,8 @@ LoadElement::LoadElement(QString file)
 			+ " at lineNumber "
 			+ QString::number(reader->lineNumber()).toStdString());
 	}
+	element.close();
+	delete reader;
 }
 
 LoadElement::~LoadElement()

@@ -13,7 +13,6 @@ class SafeElement
 	~SafeElement();
 
   private:
-	QFile*	 file;
 	VElement element_data;
 
 	void write_definition(QXmlStreamWriter* writer);

@@ -28,7 +28,6 @@ class LoadElement
 	QVector<QMap<QString, QVariant>> description();
 
   private:
-	QFile*							 element;
 	QUuid							 uuid_element; //= QUuid::createUuid();
 	QMap<QString, QVariant>			 definition_element;
 	QMap<QString, QString>			 name_element;
