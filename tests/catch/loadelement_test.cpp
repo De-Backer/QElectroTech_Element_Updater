@@ -10,30 +10,12 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 	try
 	{
 		LoadElement mytest(TEST_CATCH_PATH "/testfile_0_3_0.elmt");
-		CHECK(10 == mytest.definition("width").toInt());
-		CHECK(30 == mytest.definition("height").toInt());
-		CHECK(5 == mytest.definition("hotspot_x").toInt());
-		CHECK(0 == mytest.definition("hotspot_y").toInt());
-		CHECK("element" == mytest.definition("type").toString().toStdString());
-		// no link_type
-		// Todo wat moet dit zijn def?
-		CHECK("" == mytest.definition("link_type").toString().toStdString());
-		// no version in definition but in file => version="0.3"
-		// Todo wat moet dit zijn?
-		CHECK("0.3" == mytest.definition("version"));
-
-		// Todo een beter manier vinden voor random waarden
-		REQUIRE_THROWS_WITH(mytest.definition("definition"), "unknown value");
-		REQUIRE_THROWS_WITH(mytest.definition("name"), "unknown value");
-		REQUIRE_THROWS_WITH(mytest.definition("description"), "unknown value");
-
 		QMap<QString, QVariant> test_definition;
 		test_definition.insert("width", 10);
 		test_definition.insert("height", 30);
 		test_definition.insert("hotspot_x", 5);
 		test_definition.insert("hotspot_y", 0);
 		test_definition.insert("type", "element");
-		test_definition.insert("link_type", "");
 		test_definition.insert("version", "0.3");
 		CHECK(test_definition == mytest.definition());
 
@@ -45,36 +27,6 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 			== mytest.uuid().toString().toStdString());
 
 		// name
-		CHECK(
-			"قابس و مقبس متعدد الأقطاب, تمثيل أحادي الخط"
-			== mytest.name("ar").toStdString());
-		CHECK(
-			"Steckverbindung komplett mit 6 Kontakten"
-			== mytest.name("de").toStdString());
-		CHECK(
-			"Plug and multipolar representation\nunifilar"
-			== mytest.name("en").toStdString());
-		CHECK(
-			"Spina e presa multipolari, rappresentazione unifilare"
-			== mytest.name("it").toStdString());
-		CHECK(
-			"Prise et fiche multipolaires, représentation\nunifilaire\n"
-			== mytest.name("fr").toStdString());
-		CHECK("Złącze wielostykowe" == mytest.name("pl").toStdString());
-		CHECK(
-			"Conector multipolar, representación unifilar"
-			== mytest.name("es").toStdString());
-		CHECK(
-			"Zásuvka a zástrčka vícepólová, v jednopólovém znázornění"
-			== mytest.name("cs").toStdString());
-		CHECK(
-			"Steker en Contact veelpolig enkellijns"
-			== mytest.name("nl").toStdString());
-
-		// test defkey en
-		CHECK(
-			"Plug and multipolar representation\nunifilar"
-			== mytest.name("ww").toStdString());
 		QMap<QString, QString> test_name;
 		test_name.insert("ar", "قابس و مقبس متعدد الأقطاب, تمثيل أحادي الخط");
 		test_name.insert("de", "Steckverbindung komplett mit 6 Kontakten");
@@ -142,7 +94,6 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 			test_var.insert("text", "6");
 			test_var.insert("x", 1);
 			test_var.insert("y", 20.5);
-			test_var.insert("tagg", "");
 			test_description.append(test_var);
 		}
 		{
@@ -229,10 +180,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		{
 			QMap<QString, QVariant> test_var;
 			test_var.insert("XML_ElementName", "terminal");
-			test_var.insert("nameHidden", "");
-			test_var.insert("number", 0);
 			test_var.insert("orientation", "n");
-			test_var.insert("name", "");
 			test_var.insert("x", 0);
 			test_var.insert("y", 0);
 			test_description.append(test_var);
@@ -240,10 +188,7 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		{
 			QMap<QString, QVariant> test_var;
 			test_var.insert("XML_ElementName", "terminal");
-			test_var.insert("nameHidden", "");
-			test_var.insert("number", 0);
 			test_var.insert("orientation", "s");
-			test_var.insert("name", "");
 			test_var.insert("x", 0);
 			test_var.insert("y", 30);
 			test_description.append(test_var);

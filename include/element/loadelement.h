@@ -14,13 +14,8 @@ class LoadElement
   public:
 	LoadElement(QString file);
 	~LoadElement();
-	[[deprecated(
-		"Replaced by definition(), which has an QMap interface")]] QVariant
-							definition(QString value);
-	QMap<QString, QVariant> definition();
-	QUuid					uuid();
-	[[deprecated("Replaced by name(), which has an QMap interface")]] QString
-									 name(QString language);
+	QMap<QString, QVariant>			 definition();
+	QUuid							 uuid();
 	QMap<QString, QString>			 name();
 	QMap<QString, QVector<QVariant>> kindInformation();
 	QMap<QString, QVector<QVariant>> elementInformations();
