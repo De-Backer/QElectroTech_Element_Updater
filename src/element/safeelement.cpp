@@ -1,23 +1,16 @@
 #include "safeelement.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QMap>
 
 SafeElement::SafeElement(QString outputfile, VElement element)
 {
     element_data = element;
-    qDebug() << "----- SafeElement ";
-    qDebug() << element.definition();
-    qDebug() << element_data.definition();
-    qDebug() << element_data.description();
-    qDebug() << element_data.elementInformations();
-    qDebug() << element_data.informations();
-    qDebug() << element_data.kindInformation();
-    qDebug() << element_data.name();
-    qDebug() << element_data.uuid();
-    qDebug() << " SafeElement ----- ";
-
+    QDir dir;
+    if (! dir.exists(outputfile.left(outputfile.lastIndexOf("/"))))
+        dir.mkpath(outputfile.left(outputfile.lastIndexOf("/")));
     QFile file(outputfile);
     if (! file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -34,9 +27,9 @@ SafeElement::SafeElement(QString outputfile, VElement element)
     QXmlStreamWriter* writer = new QXmlStreamWriter(&file);
     writer->setAutoFormatting(true);
     writer->writeStartDocument();
-    writer->writeComment("note: this is still in the testing phase!");
+    writer->writeComment(
+        "note: this is written by QElectroTech Element Updater version: 0.0.0");
     write_definition(writer);
-    writer->writeComment("note: this is still in the testing phase!");
     writer->writeEndDocument();
     file.close();
     delete writer;
@@ -141,7 +134,6 @@ void SafeElement::write_definition_description(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartLine(QXmlStreamWriter* writer)
 {
-    writer->writeComment("line");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -150,7 +142,6 @@ void SafeElement::write_PartLine(QXmlStreamWriter* writer)
                 .toString()
             == "line")
         {
-            qDebug() << "write_PartLine" << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")
@@ -170,7 +161,6 @@ void SafeElement::write_PartLine(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartRectangle(QXmlStreamWriter* writer)
 {
-    writer->writeComment("rect");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -179,7 +169,6 @@ void SafeElement::write_PartRectangle(QXmlStreamWriter* writer)
                 .toString()
             == "rect")
         {
-            qDebug() << "write_Partrect" << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")
@@ -199,7 +188,6 @@ void SafeElement::write_PartRectangle(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartEllipse(QXmlStreamWriter* writer)
 {
-    writer->writeComment("ellipse");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -208,8 +196,6 @@ void SafeElement::write_PartEllipse(QXmlStreamWriter* writer)
                 .toString()
             == "ellipse")
         {
-            qDebug() << "write_PartEllipse"
-                     << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")
@@ -229,7 +215,6 @@ void SafeElement::write_PartEllipse(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartCircle(QXmlStreamWriter* writer)
 {
-    writer->writeComment("circle");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -238,8 +223,6 @@ void SafeElement::write_PartCircle(QXmlStreamWriter* writer)
                 .toString()
             == "circle")
         {
-            qDebug() << "write_PartCircle"
-                     << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")
@@ -259,7 +242,6 @@ void SafeElement::write_PartCircle(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartPolygon(QXmlStreamWriter* writer)
 {
-    writer->writeComment("polygon");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -268,8 +250,6 @@ void SafeElement::write_PartPolygon(QXmlStreamWriter* writer)
                 .toString()
             == "polygon")
         {
-            qDebug() << "write_PartPolygon"
-                     << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")
@@ -289,7 +269,6 @@ void SafeElement::write_PartPolygon(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartTerminal(QXmlStreamWriter* writer)
 {
-    writer->writeComment("terminal");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -298,8 +277,6 @@ void SafeElement::write_PartTerminal(QXmlStreamWriter* writer)
                 .toString()
             == "terminal")
         {
-            qDebug() << "write_PartTerminal"
-                     << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")
@@ -319,7 +296,6 @@ void SafeElement::write_PartTerminal(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartText(QXmlStreamWriter* writer)
 {
-    writer->writeComment("text");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -328,7 +304,6 @@ void SafeElement::write_PartText(QXmlStreamWriter* writer)
                 .toString()
             == "text")
         {
-            qDebug() << "write_PartText" << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")
@@ -348,7 +323,6 @@ void SafeElement::write_PartText(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartArc(QXmlStreamWriter* writer)
 {
-    writer->writeComment("arc");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -357,7 +331,6 @@ void SafeElement::write_PartArc(QXmlStreamWriter* writer)
                 .toString()
             == "arc")
         {
-            qDebug() << "write_PartArc" << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")
@@ -377,7 +350,6 @@ void SafeElement::write_PartArc(QXmlStreamWriter* writer)
 
 void SafeElement::write_PartDynamicTextField(QXmlStreamWriter* writer)
 {
-    writer->writeComment("dynamic_text");
     for (int var = 0; var < element_data.description().size(); ++var)
     {
         if (element_data.description()
@@ -386,8 +358,6 @@ void SafeElement::write_PartDynamicTextField(QXmlStreamWriter* writer)
                 .toString()
             == "dynamic_text")
         {
-            qDebug() << "write_PartDynamicTextField"
-                     << element_data.description().at(var);
             writer->writeStartElement(element_data.description()
                                           .at(var)
                                           .value("XML_ElementName")

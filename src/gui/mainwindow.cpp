@@ -122,8 +122,12 @@ void MainWindow::open_file()
     QStringList data = QFileDialog::getOpenFileNames(
         this,
         tr("Open Element"),
-        "/home/simon/GIT/qet/elements/",
+        QDir::homePath(),
         tr("Element Files (*.elmt)"));
+    QString Safe_dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("Safe Element dir"),
+        QDir::homePath());
     for (QString filename : data)
     {
         try
@@ -137,7 +141,7 @@ void MainWindow::open_file()
             // Element
             qDebug() << "SafeElement";
             SafeElement test_safe(
-                filename + "test",
+                Safe_dir + filename.mid(filename.lastIndexOf("/")),
                 test_element); // 4 Safe Element
 
             // 1 qDebug info-->
@@ -175,14 +179,19 @@ void MainWindow::open_dir()
 {
 
     QStringList  elements;
+    QString      data_dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("Open Element dir"),
+        QDir::homePath() + "/GIT/qet/elements/");
     QDirIterator it(
-        QFileDialog::getExistingDirectory(
-            this,
-            tr("Open Element dir"),
-            "/home/simon/GIT/qet/elements/"),
+        data_dir,
         QStringList() << "*.elmt",
         QDir::Files,
         QDirIterator::Subdirectories);
+    QString Safe_dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("Safe Element dir"),
+        QDir::homePath());
     while (it.hasNext()) elements << it.next();
 
     QStringList version_elements;
@@ -192,8 +201,11 @@ void MainWindow::open_dir()
         {
             LoadElement    test(filename); // 1 Load Element
             ConvertElement CElem(test);    // 2 Convert Element
-            // 3 Element
-            // 4 Safe Element
+            VElement       test_element = CElem.GetElement(); // 3 Element
+            qDebug() << Safe_dir + filename.remove(data_dir);
+            SafeElement test_safe(
+                Safe_dir + filename.remove(data_dir),
+                test_element); // 4 Safe Element
 
             // 1 qDebug info-->
             qDebug() << "file: " + filename;
