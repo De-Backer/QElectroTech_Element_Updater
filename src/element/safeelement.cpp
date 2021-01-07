@@ -371,6 +371,7 @@ void SafeElement::write_PartDynamicTextField(QXmlStreamWriter* writer)
                     && data.key() != "info_name")
                     writer->writeAttribute(data.key(), data.value().toString());
             }
+            if (element_data.description().at(var).contains("text"))
             {
                 writer->writeStartElement("text");
                 writer->writeCharacters(element_data.description()
@@ -379,6 +380,7 @@ void SafeElement::write_PartDynamicTextField(QXmlStreamWriter* writer)
                                             .toString());
                 writer->writeEndElement();
             }
+            if (element_data.description().at(var).contains("info_name"))
             {
                 writer->writeStartElement("info_name");
                 writer->writeCharacters(element_data.description()
