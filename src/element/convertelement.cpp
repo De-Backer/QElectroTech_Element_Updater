@@ -6,6 +6,11 @@
 #include <QMapIterator>
 #include <QUuid>
 
+/**
+ * @brief ConvertElement::ConvertElement
+ * Convert LoadElement to VElement
+ * @param element
+ */
 ConvertElement::ConvertElement(LoadElement element)
 {
     if (element.definition().value("version") != "0.80")
@@ -239,6 +244,21 @@ ConvertElement::ConvertElement(LoadElement element)
     new_element.uuid(element.uuid());
 }
 
+/**
+ * @brief ConvertElement::ConvertElement
+ * Fix and clean VElement
+ * @param element
+ */
+ConvertElement::ConvertElement(VElement element)
+{
+    throw std::invalid_argument("ConvertElement ToDo");
+    new_element = element;
+}
+
 ConvertElement::~ConvertElement() {}
 
+/**
+ * @brief ConvertElement::GetElement
+ * @return
+ */
 VElement ConvertElement::GetElement() { return new_element; }

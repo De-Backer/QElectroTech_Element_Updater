@@ -12,6 +12,7 @@ class ConvertElement
 {
   public:
     ConvertElement(LoadElement element);
+    ConvertElement(VElement element);
     ~ConvertElement();
     VElement GetElement();
 

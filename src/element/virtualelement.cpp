@@ -1,7 +1,5 @@
 #include "virtualelement.h"
 
-#include <QDebug>
-
 VElement::VElement() {}
 
 VElement::VElement(
