@@ -25,6 +25,7 @@ find_package(
   Qt5
   COMPONENTS
   Core
+  Gui
   Xml
   REQUIRED
   )
@@ -32,6 +33,7 @@ find_package(
   Qt${QT_VERSION_MAJOR}
   COMPONENTS
   Core
+  Gui
   Xml
   REQUIRED
   )
@@ -61,6 +63,7 @@ target_include_directories(element
 target_link_libraries(element
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Xml
   )
 

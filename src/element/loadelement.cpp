@@ -508,7 +508,7 @@ void LoadElement::read_PartDynamicTextField(QXmlStreamReader* reader)
         var.insert("x", reader->attributes().value("x").toDouble());
     if (reader->attributes().hasAttribute("y"))
         var.insert("y", reader->attributes().value("y").toDouble());
-    if (reader->attributes().hasAttribute("z"))
+    if (reader->attributes().hasAttribute("z")) // stacking order
         var.insert("z", reader->attributes().value("z").toDouble());
     if (reader->attributes().hasAttribute("rotation"))
         var.insert(
@@ -532,6 +532,14 @@ void LoadElement::read_PartDynamicTextField(QXmlStreamReader* reader)
             reader->attributes().value("Halignment").toString());
     if (reader->attributes().hasAttribute("font"))
         var.insert("font", reader->attributes().value("font").toString());
+    if (reader->attributes().hasAttribute("font_family"))
+        var.insert(
+            "font_family",
+            reader->attributes().value("font_family").toString());
+    if (reader->attributes().hasAttribute("font_size"))
+        var.insert(
+            "font_size",
+            reader->attributes().value("font_size").toString());
     if (reader->attributes().hasAttribute("frame"))
         var.insert("frame", reader->attributes().value("frame").toString());
     if (reader->attributes().hasAttribute("uuid"))
