@@ -227,7 +227,7 @@ TEST_CASE("LoadElement line x is - 0.foo")
 			test_var.insert("end2", "none");
 			test_var.insert(
 				"style",
-				"line-style:normal;line-weight:thin;filling:none;color:black");
+				"line-style:normal;line-weight:hight;filling:none;color:black");
 			test_var.insert("antialias", "false");
 			test_description.append(test_var);
 		}
@@ -244,7 +244,8 @@ TEST_CASE("LoadElement line x is - 0.foo")
 			test_var.insert("end2", "none");
 			test_var.insert(
 				"style",
-				"line-style:normal;line-weight:thin;filling:none;color:black");
+				"line-style:normal;line-weight:hight;filling:none;color:"
+				"black");
 			test_var.insert("antialias", "false");
 			test_description.append(test_var);
 		}
@@ -279,7 +280,8 @@ TEST_CASE("LoadElement line x is - 0.foo")
 		for (QMap<QString, QVariant> vars : mytest.description())
 		{
 			INFO(var);
-			CHECK(test_description.at(var++).toStdMap() == vars.toStdMap());
+			CHECK(test_description.at(var).toStdMap() == vars.toStdMap());
+			++var;
 		}
 	}
 	catch (std::exception& e)

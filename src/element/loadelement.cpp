@@ -282,19 +282,42 @@ void LoadElement::read_PartLine(QXmlStreamReader* reader)
     Q_ASSERT(
         reader->isStartElement() && reader->name() == QLatin1String("line"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x1"))
-        var.insert("x1", reader->attributes().value("x1").toInt());
+        var.insert("x1", reader->attributes().value("x1").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y1"))
-        var.insert("y1", reader->attributes().value("y1").toInt());
+        var.insert("y1", reader->attributes().value("y1").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("x2"))
-        var.insert("x2", reader->attributes().value("x2").toInt());
+        var.insert("x2", reader->attributes().value("x2").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y2"))
-        var.insert("y2", reader->attributes().value("y2").toInt());
+        var.insert("y2", reader->attributes().value("y2").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("length1"))
-        var.insert("length1", reader->attributes().value("length1").toDouble());
+        var.insert(
+            "length1",
+            reader->attributes().value("length1").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("length2"))
-        var.insert("length2", reader->attributes().value("length2").toDouble());
+        var.insert(
+            "length2",
+            reader->attributes().value("length2").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("end1"))
         var.insert("end1", reader->attributes().value("end1").toString());
     if (reader->attributes().hasAttribute("end2"))
@@ -305,7 +328,6 @@ void LoadElement::read_PartLine(QXmlStreamReader* reader)
         var.insert(
             "antialias",
             reader->attributes().value("antialias").toString());
-
     description_element.append(var);
     reader->readNextStartElement();
 }
@@ -315,15 +337,30 @@ void LoadElement::read_PartRectangle(QXmlStreamReader* reader)
     Q_ASSERT(
         reader->isStartElement() && reader->name() == QLatin1String("rect"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x"))
-        var.insert("x", reader->attributes().value("x").toDouble());
+        var.insert("x", reader->attributes().value("x").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y"))
-        var.insert("y", reader->attributes().value("y").toDouble());
+        var.insert("y", reader->attributes().value("y").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("height"))
-        var.insert("height", reader->attributes().value("height").toDouble());
+        var.insert(
+            "height",
+            reader->attributes().value("height").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("width"))
-        var.insert("width", reader->attributes().value("width").toDouble());
+        var.insert("width", reader->attributes().value("width").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("style"))
         var.insert("style", reader->attributes().value("style").toString());
     if (reader->attributes().hasAttribute("antialias"))
@@ -340,13 +377,25 @@ void LoadElement::read_PartEllipse(QXmlStreamReader* reader)
     Q_ASSERT(
         reader->isStartElement() && reader->name() == QLatin1String("ellipse"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x"))
-        var.insert("x", reader->attributes().value("x").toDouble());
+        var.insert("x", reader->attributes().value("x").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y"))
-        var.insert("y", reader->attributes().value("y").toDouble());
+        var.insert("y", reader->attributes().value("y").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("height"))
-        var.insert("height", reader->attributes().value("height").toDouble());
+        var.insert(
+            "height",
+            reader->attributes().value("height").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("width"))
         var.insert("width", reader->attributes().value("width").toDouble());
     if (reader->attributes().hasAttribute("style"))
@@ -365,15 +414,25 @@ void LoadElement::read_PartCircle(QXmlStreamReader* reader)
     Q_ASSERT(
         reader->isStartElement() && reader->name() == QLatin1String("circle"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x"))
-        var.insert("x", reader->attributes().value("x").toDouble());
+        var.insert("x", reader->attributes().value("x").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y"))
-        var.insert("y", reader->attributes().value("y").toDouble());
+        var.insert("y", reader->attributes().value("y").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("diameter"))
         var.insert(
             "diameter",
-            reader->attributes().value("diameter").toDouble());
+            reader->attributes().value("diameter").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("style"))
         var.insert("style", reader->attributes().value("style").toString());
     if (reader->attributes().hasAttribute("antialias"))
@@ -389,6 +448,7 @@ void LoadElement::read_PartPolygon(QXmlStreamReader* reader)
     Q_ASSERT(
         reader->isStartElement() && reader->name() == QLatin1String("polygon"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("style"))
         var.insert("style", reader->attributes().value("style").toString());
@@ -403,10 +463,16 @@ void LoadElement::read_PartPolygon(QXmlStreamReader* reader)
     {
         var.insert(
             QString("x%1").arg(nr),
-            reader->attributes().value(QString("x%1").arg(nr)).toDouble());
+            reader->attributes().value(QString("x%1").arg(nr)).toDouble(&ok));
+        if (! ok)
+            throw std::invalid_argument(
+                QString::number(__LINE__).toStdString() + __FILE__);
         var.insert(
             QString("y%1").arg(nr),
-            reader->attributes().value(QString("y%1").arg(nr)).toDouble());
+            reader->attributes().value(QString("y%1").arg(nr)).toDouble(&ok));
+        if (! ok)
+            throw std::invalid_argument(
+                QString::number(__LINE__).toStdString() + __FILE__);
         ++nr;
     }
     description_element.append(var);
@@ -420,17 +486,27 @@ void LoadElement::read_PartTerminal(QXmlStreamReader* reader)
         reader->isStartElement()
         && reader->name() == QLatin1String("terminal"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x"))
-        var.insert("x", reader->attributes().value("x").toDouble());
+        var.insert("x", reader->attributes().value("x").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y"))
-        var.insert("y", reader->attributes().value("y").toDouble());
+        var.insert("y", reader->attributes().value("y").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("orientation"))
         var.insert(
             "orientation",
             reader->attributes().value("orientation").toString());
     if (reader->attributes().hasAttribute("number"))
-        var.insert("number", reader->attributes().value("number").toInt());
+        var.insert("number", reader->attributes().value("number").toInt(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("name"))
         var.insert("name", reader->attributes().value("name").toString());
     if (reader->attributes().hasAttribute("nameHidden"))
@@ -449,11 +525,18 @@ void LoadElement::read_PartText(QXmlStreamReader* reader)
     Q_ASSERT(
         reader->isStartElement() && reader->name() == QLatin1String("text"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x"))
-        var.insert("x", reader->attributes().value("x").toDouble());
+        var.insert("x", reader->attributes().value("x").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y"))
-        var.insert("y", reader->attributes().value("y").toDouble());
+        var.insert("y", reader->attributes().value("y").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("rotation"))
         var.insert(
             "rotation",
@@ -474,19 +557,40 @@ void LoadElement::read_PartArc(QXmlStreamReader* reader)
     Q_ASSERT(
         reader->isStartElement() && reader->name() == QLatin1String("arc"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x"))
-        var.insert("x", reader->attributes().value("x").toDouble());
+        var.insert("x", reader->attributes().value("x").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y"))
-        var.insert("y", reader->attributes().value("y").toDouble());
+        var.insert("y", reader->attributes().value("y").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("height"))
-        var.insert("height", reader->attributes().value("height").toDouble());
+        var.insert(
+            "height",
+            reader->attributes().value("height").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("width"))
-        var.insert("width", reader->attributes().value("width").toDouble());
+        var.insert("width", reader->attributes().value("width").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("start"))
-        var.insert("start", reader->attributes().value("start").toDouble());
+        var.insert("start", reader->attributes().value("start").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("angle"))
-        var.insert("angle", reader->attributes().value("angle").toDouble());
+        var.insert("angle", reader->attributes().value("angle").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("style"))
         var.insert("style", reader->attributes().value("style").toString());
     if (reader->attributes().hasAttribute("antialias"))
@@ -503,13 +607,23 @@ void LoadElement::read_PartDynamicTextField(QXmlStreamReader* reader)
         reader->isStartElement()
         && reader->name() == QLatin1String("dynamic_text"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x"))
-        var.insert("x", reader->attributes().value("x").toDouble());
+        var.insert("x", reader->attributes().value("x").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y"))
-        var.insert("y", reader->attributes().value("y").toDouble());
+        var.insert("y", reader->attributes().value("y").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("z")) // stacking order
-        var.insert("z", reader->attributes().value("z").toDouble());
+        var.insert("z", reader->attributes().value("z").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("rotation"))
         var.insert(
             "rotation",
@@ -517,7 +631,10 @@ void LoadElement::read_PartDynamicTextField(QXmlStreamReader* reader)
     if (reader->attributes().hasAttribute("text_width"))
         var.insert(
             "text_width",
-            reader->attributes().value("text_width").toDouble());
+            reader->attributes().value("text_width").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("text_from"))
         var.insert(
             "text_from",
@@ -568,13 +685,23 @@ void LoadElement::read_PartInput(QXmlStreamReader* reader)
     Q_ASSERT(
         reader->isStartElement() && reader->name() == QLatin1String("input"));
     QMap<QString, QVariant> var;
+    bool                    ok = true;
     var.insert("XML_ElementName", reader->name().toString());
     if (reader->attributes().hasAttribute("x"))
-        var.insert("x", reader->attributes().value("x").toDouble());
+        var.insert("x", reader->attributes().value("x").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("y"))
-        var.insert("y", reader->attributes().value("y").toDouble());
+        var.insert("y", reader->attributes().value("y").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("size"))
-        var.insert("size", reader->attributes().value("size").toDouble());
+        var.insert("size", reader->attributes().value("size").toDouble(&ok));
+    if (! ok)
+        throw std::invalid_argument(
+            QString::number(__LINE__).toStdString() + __FILE__);
     if (reader->attributes().hasAttribute("rotate"))
         var.insert("rotate", reader->attributes().value("rotate").toString());
     if (reader->attributes().hasAttribute("tagg"))
