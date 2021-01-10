@@ -1,5 +1,6 @@
 #include "loadelement.h"
 
+#include <QString>
 #include <QUuid>
 #include <QtDebug>
 #include <catch2/catch.hpp>
@@ -198,6 +199,86 @@ TEST_CASE("LoadElement 0.3.0", "0.3.0")
 		for (QMap<QString, QVariant> vars : mytest.description())
 		{
 			INFO("vars");
+			CHECK(test_description.at(var++).toStdMap() == vars.toStdMap());
+		}
+	}
+	catch (std::exception& e)
+	{
+		CHECK(0 == e.what()); // what is exception?
+	}
+}
+
+TEST_CASE("LoadElement line x is - 0.foo")
+{
+	try
+	{
+		LoadElement mytest(TEST_CATCH_PATH "/test_xy.elmt");
+		QVector<QMap<QString, QVariant>> test_description;
+		{
+			QMap<QString, QVariant> test_var;
+			test_var.insert("XML_ElementName", "line");
+			test_var.insert("x1", 0);
+			test_var.insert("y1", -16);
+			test_var.insert("x2", 0);
+			test_var.insert("y2", 13);
+			test_var.insert("length1", 1.5);
+			test_var.insert("length2", 1.5);
+			test_var.insert("end1", "none");
+			test_var.insert("end2", "none");
+			test_var.insert(
+				"style",
+				"line-style:normal;line-weight:thin;filling:none;color:black");
+			test_var.insert("antialias", "false");
+			test_description.append(test_var);
+		}
+		{
+			QMap<QString, QVariant> test_var;
+			test_var.insert("XML_ElementName", "line");
+			test_var.insert("x1", -13.6493);
+			test_var.insert("y1", 14);
+			test_var.insert("x2", 12.62);
+			test_var.insert("y2", 14);
+			test_var.insert("length1", 1.5);
+			test_var.insert("length2", 1.5);
+			test_var.insert("end1", "none");
+			test_var.insert("end2", "none");
+			test_var.insert(
+				"style",
+				"line-style:normal;line-weight:thin;filling:none;color:black");
+			test_var.insert("antialias", "false");
+			test_description.append(test_var);
+		}
+		{
+			QMap<QString, QVariant> test_var;
+			test_var.insert("XML_ElementName", "dynamic_text");
+			test_var.insert("uuid", "{7f02ce13-533d-4501-980d-6cb67bd1110d}");
+			test_var.insert("Halignment", "AlignLeft");
+			test_var.insert("frame", "false");
+			test_var.insert("Valignment", "AlignTop");
+			test_var.insert("text_from", "ElementInfo");
+			test_var.insert("font", "Sans Serif,9,-1,5,50,0,0,0,0,0");
+			test_var.insert("rotation", 0);
+			test_var.insert("text_width", -1);
+			test_var.insert("text", "");
+			test_var.insert("info_name", "label");
+			test_var.insert("z", 3);
+			test_var.insert("x", 8);
+			test_var.insert("y", -9);
+			test_description.append(test_var);
+		}
+		{
+			QMap<QString, QVariant> test_var;
+			test_var.insert("XML_ElementName", "terminal");
+			test_var.insert("orientation", "n");
+			test_var.insert("x", 0);
+			test_var.insert("y", -20);
+			test_description.append(test_var);
+		}
+		int var = 0;
+		INFO("Test case start");
+		for (QMap<QString, QVariant> vars : mytest.description())
+		{
+			INFO(var);
 			CHECK(test_description.at(var++).toStdMap() == vars.toStdMap());
 		}
 	}
