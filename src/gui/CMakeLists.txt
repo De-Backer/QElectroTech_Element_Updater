@@ -25,12 +25,14 @@ find_package(
   Qt5
   COMPONENTS
   Widgets
+  Concurrent
   REQUIRED
   )
 find_package(
   Qt${QT_VERSION_MAJOR}
   COMPONENTS
   Widgets
+  Concurrent
   REQUIRED
   )
 
@@ -54,6 +56,7 @@ target_include_directories(gui
 target_link_libraries(gui
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Widgets
+  Qt${QT_VERSION_MAJOR}::Concurrent
   )
 
 # All users of this library will need at least C++11

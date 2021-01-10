@@ -38,6 +38,7 @@ class MainWindow : public QMainWindow
     void    createActions();
     void    createMenus();
     QString RemoveAmpersand(QString var);
+    void    Load_Convert_Safe(QString file_in, QString file_out);
   private slots:
     void open_file();
     void open_dir();

@@ -9,7 +9,9 @@
 #include <QDebug>
 #include <QDirIterator>
 #include <QFileDialog>
+#include <QFuture>
 #include <QStringList>
+#include <QtConcurrent/QtConcurrent>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
@@ -116,62 +118,41 @@ QString MainWindow::RemoveAmpersand(QString var)
 #endif
 }
 
+void MainWindow::Load_Convert_Safe(QString file_in, QString file_out)
+{
+    try
+    {
+        LoadElement    test(file_in);                      // 1 Load Element
+        ConvertElement cetest(test);                       // 2 Convert Element
+        VElement       test_element = cetest.GetElement(); // 3 Element
+        SafeElement    test_safe(file_out, test_element);  // 4 Safe Element
+    }
+    catch (std::exception& e)
+    {
+        qWarning() << e.what(); // what is exception?
+        qWarning() << "!! exception !!" << __LINE__ << __FILE__;
+        qDebug() << "_____________________________________________________";
+    }
+    catch (...)
+    {
+        qWarning() << "!! exception !!" << __LINE__ << __FILE__;
+    }
+}
+
 void MainWindow::open_file()
 {
-    // #TODO Dir /home/simon/GIT/qet/elements/ veranderen
     QStringList data = QFileDialog::getOpenFileNames(
         this,
         tr("Open Element"),
         QDir::homePath(),
         tr("Element Files (*.elmt)"));
-    QString Safe_dir = QFileDialog::getExistingDirectory(
-        this,
-        tr("Safe Element dir"),
-        QDir::homePath());
     for (QString filename : data)
     {
-        try
-        {
-            qDebug() << "LoadElement";
-            LoadElement test(filename); // 1 Load Element
-            qDebug() << "Convert Element";
-            ConvertElement cetest(test); // 2 Convert Element
-            qDebug() << "Element";
-            VElement test_element = cetest.GetElement(); // 3
-            // Element
-            qDebug() << "SafeElement";
-            SafeElement test_safe(
-                Safe_dir + filename.mid(filename.lastIndexOf("/")),
-                test_element); // 4 Safe Element
-
-            // 1 qDebug info-->
-            //			qDebug() << "file:" << filename;
-            //			qDebug() << "version:              "
-            //					 << test.definition()
-            //							.value("version", "! no version
-            // gevonden") 							.toString(); 			qDebug() << "definition
-            // : " << test.definition(); 			qDebug() << "uuid: " <<
-            // test.uuid(); 			qDebug() << "name:                 " <<
-            // test.name(); 			qDebug() << "kindInformation     : " <<
-            // test.kindInformation(); 			qDebug() << "elementInformations : "
-            // <<
-            // test.elementInformations(); 			qDebug() << "informations: "
-            //<< test.informations(); 			qDebug() << "description: ";
-            //for (QMap<QString, QVariant> description : test.description())
-            //{ qDebug() << description; }
-            // <--1 qDebug info
-        }
-        catch (std::exception& e)
-        {
-            qWarning() << e.what(); // what is exception?
-            qWarning() << "!! exception !!" << __LINE__ << __FILE__;
-            qDebug() << "_____________________________________________________";
-        }
-        catch (...)
-        {
-            qWarning() << "!! exception !!" << __LINE__ << __FILE__;
-        }
-        qDebug() << "MainWindow: " << filename;
+        QtConcurrent::run(
+            this,
+            &MainWindow::Load_Convert_Safe,
+            filename,
+            filename);
     }
 }
 
@@ -191,7 +172,7 @@ void MainWindow::open_dir()
     QString Safe_dir = QFileDialog::getExistingDirectory(
         this,
         tr("Safe Element dir"),
-        QDir::homePath());
+        QDir::homePath() + "/.qet/elements/test/");
     while (it.hasNext()) elements << it.next();
 
     QStringList version_elements;
